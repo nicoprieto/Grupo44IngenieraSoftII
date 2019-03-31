@@ -4,6 +4,6 @@
 
 ### Integrantes
 
-* Martin Ruiz
-* Nicolas Prieto
-* Irina Benitez
+* [Ruiz Martin](mailto:arcollector@gmail.com)
+* [Prieto Nicolas](mailto:malak32@gmail.com)
+* [Benitez Irina](mailto:iru.lp91@gmail.com)
