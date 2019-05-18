@@ -37,6 +37,9 @@ export default async (
                 param: "email"
               }
             ],
+            data: {
+              email,
+            },
           }
         );
       } else {
@@ -60,7 +63,9 @@ export default async (
                   "param": "pass"
                 }
               ],
-              data: req.body,
+              data: {
+                email,
+              },
             }
           );
         }
@@ -79,7 +84,9 @@ export default async (
               "param": ""
             }
           ],
-          data: req.body,
+          data: {
+            email,
+          },
         }
       );
     }

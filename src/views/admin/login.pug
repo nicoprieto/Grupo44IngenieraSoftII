@@ -26,19 +26,22 @@ html
       method="POST"
       class="form-registration"
     )
-      label(for="name") Name:
+      label(for="email") Email:
       input(
         type="email"
         id="email"
         name="email"
         class="form-control"
+        placeholder="email"
+        value=data.email
       )
 
-      label(for="pass") Email:
+      label(for="pass") Clave:
       input(
         type="password"
         id="pass"
         name="pass"
+        placeholder="clave"
         class="form-control"
       )
 

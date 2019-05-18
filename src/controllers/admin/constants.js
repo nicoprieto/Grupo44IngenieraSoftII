@@ -13,6 +13,10 @@ type TViewProps = {
 export const loginViewFile = 'admin/login';
 export const loginViewProps: TViewProps = {
   title: 'Login admin - Iniciar sesion',
+  data: {
+    email: '',
+    pass: '',
+  },
 };
 
 export const dashboardViewFile = 'admin/dashboard';
