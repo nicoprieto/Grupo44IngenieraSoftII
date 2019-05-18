@@ -2,6 +2,27 @@
 
 import objection from 'objection';
 
+export type TResidence = {
+  id: number | null,
+  title: string,
+  description: string,
+  address_street: string,
+  address_number: string,
+  address_postal_code: string,
+  address_city: string,
+  address_state: string,
+  address_nation: string,
+  address_apartament: string,
+  address_flat: string,
+  isEnabled: bool,
+  price: number,
+  created_at: string,
+  updated_at: string,
+  isRemoved: bool, 
+};
+
+export type TResidences = Array<TResidence>;
+
 export default (
   Model: objection.Model
 ) => {

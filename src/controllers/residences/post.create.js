@@ -8,6 +8,8 @@ import express, {
 import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
+import { type TResidence } from '../../models/Residences';
+
 import {
   residenceViewFile,
   residenceViewProps,
@@ -36,7 +38,8 @@ export default async (
       price,
     } = req.body;
     try {
-      const residence = await Residences.query().insert({
+      const residenceData: TResidence = {
+        id: null,
         title,
         description,
         address_street,
@@ -51,10 +54,10 @@ export default async (
         price,
         created_at: now(),
         updated_at: '',
-        isRemoved: 0,
-      });
-      console.log(residence);
-      res.send(true);
+        isRemoved: false,
+      };
+      const residence = await Residences.query().insert(residenceData);
+      res.redirect('/admin/residences');
     // database error
     } catch(e) {
       console.error(e);

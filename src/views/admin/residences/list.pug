@@ -1,0 +1,26 @@
+extends ../_layout.pug
+
+block list
+  table.table.table-striped
+    thead.thead-dark
+      tr
+        th Id
+        th Titulo
+        th Descripcion
+        th Acciones
+
+    tbody
+      for item in data
+        tr
+          td= item.id
+          td= item.title
+          td= item.description
+          td
+            a(
+              href=`/admin/residences/${item.id}`
+              class="btn btn-link"
+            ) Ver detalle/Editar
+            a(
+              href=`/admin/residences/${item.id}/delete`
+              class="btn btn-link"
+            ) Eliminar

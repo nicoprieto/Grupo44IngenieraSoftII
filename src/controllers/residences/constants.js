@@ -1,6 +1,23 @@
 // @flow
 
-type TViewProps = {
+import { type TResidences } from '../../models/Residences';
+
+type TListViewProps = {
+  title: string,
+  data: TResidences
+}; 
+
+export const listViewFile = 'admin/residences/list';
+export const listViewProps: TListViewProps = {
+  title: 'Residencia - Listado',
+  data: [],
+};
+
+// *********************
+//
+// *********************
+
+type TCreateViewProps = {
   title: string,
   errors?: Array<{
     location: string,
@@ -13,7 +30,7 @@ type TViewProps = {
 }; 
 
 export const residenceViewFile = 'admin/residences/create';
-export const residenceViewProps: TViewProps = {
+export const residenceViewProps: TCreateViewProps = {
   title: 'Residencia - Crear',
   data: {
     title: '',

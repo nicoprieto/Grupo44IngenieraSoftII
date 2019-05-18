@@ -11,6 +11,7 @@ import { type TGuardError } from '../../routes.helpers/guard';
 import { type TModels } from '../../models';
 
 import {
+  getList,
   getCreate,
   postCreate,
 } from '../../controllers/residences';
@@ -21,6 +22,18 @@ import {
 
 export default (helpers: THelpers, models: TModels) => {
   const router = express.Router({ mergeParams: true });
+
+  router.get(
+    '/',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => getList(req, res, helpers, models)
+  );
 
   router.get(
     '/create',
