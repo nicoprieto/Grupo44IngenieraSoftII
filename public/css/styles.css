@@ -64,3 +64,25 @@ body {
 .listing-table th:first-child {
   border-right: 1px solid #666;
 }
+
+/*
+* ADMIN DASHBOARD
+*/
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background-color: #ddd;
+}
+
+.sidebar.active {
+  margin-left: -250px;
+}
+
+.container {
+  background-color: #fff;
+}

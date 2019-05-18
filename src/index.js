@@ -49,6 +49,7 @@ app.use(bodyParser.json());
 import initModels from './models';
 
 // init database models
+// $FlowFixMe
 const models = initModels(path.resolve(process.env.DATABASE_NAME));
 // fail database setup
 if(models === null) {
@@ -61,6 +62,7 @@ if(models === null) {
 
 import initSession from './auth';
 
+// $FlowFixMe
 initSession(app, models.knex);
 
 // ****************
@@ -77,7 +79,16 @@ import admin from './routes/admin';
 
 app.use(
   '/admin',
+  // $FlowFixMe
   admin(routesHelpers, models)
+);
+
+import adminResidences from './routes/admin.residences';
+
+app.use(
+  '/admin/residences',
+  // $FlowFixMe
+  adminResidences(routesHelpers, models)
 );
 
 // ****************

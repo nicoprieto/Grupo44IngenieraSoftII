@@ -1,0 +1,151 @@
+extends ../_layout.pug
+
+block form
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  form(
+    action="/admin/residences"
+    method="POST"
+  )
+
+    div.form-group
+      label(for="title") Titulo:
+      input(
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        placeholder="Ingrese titulo"
+        value=data.title
+      )
+
+    div.form-group
+      label(for="description") Descripción:
+      textarea(
+        id="description"
+        name="description"
+        class="form-control"
+        placeholder="Ingrese descripción"
+        value=data.description
+      )
+
+    div.form-group
+      label(for="address_street") Domicilio calle:
+      input(
+        type="text"
+        id="address_street"
+        name="address_street"
+        class="form-control"
+        placeholder="Ingrese domicilio calle"
+        value=data.address_street
+      )
+
+    div.form-group
+      label(for="address_number") Domicilio numero:
+      input(
+        type="text"
+        id="address_number"
+        name="address_number"
+        class="form-control"
+        placeholder="Ingrese domicilio numero"
+        value=data.address_number
+      )
+
+    div.form-group
+      label(for="address_postal_code") Domicilio codigo postal:
+      input(
+        type="text"
+        id="address_postal_code"
+        name="address_postal_code"
+        class="form-control"
+        placeholder="Ingrese domicilio codigo postal"
+        value=data.address_postal_code
+      )
+
+    div.form-group
+      label(for="address_city") Domicilio ciudad:
+      input(
+        type="text"
+        id="address_city"
+        name="address_city"
+        class="form-control"
+        placeholder="Ingrese domicilio ciudad"
+        value=data.address_city
+      )
+
+    div.form-group
+      label(for="address_state") Domicilio provincia:
+      input(
+        type="text"
+        id="address_state"
+        name="address_state"
+        class="form-control"
+        placeholder="Ingrese domicilio provincia"
+        value=data.address_state
+      )
+
+    div.form-group
+      label(for="address_nation") Domicilio pais:
+      input(
+        type="text"
+        id="address_nation"
+        name="address_nation"
+        class="form-control"
+        placeholder="Ingrese domicilio pais"
+        value=data.address_nation
+      )
+
+    div.form-group
+      label(for="address_apartament") Domicilio departamento:
+      input(
+        type="text"
+        id="address_apartament"
+        name="address_apartament"
+        class="form-control"
+        placeholder="Ingrese domicilio departamento"
+        value=data.address_apartament
+      )
+
+    div.form-group
+      label(for="address_flat") Domicilio piso:
+      input(
+        type="text"
+        id="address_flat"
+        name="address_flat"
+        class="form-control"
+        placeholder="Ingrese domicilio piso"
+        value=data.address_flat
+      )
+
+    div.form-check
+      input(
+        type="checkbox"
+        class="form-check-input"
+        id="isEnabled"
+        checked=data.isEnabled 
+      )
+      label(
+        class="form-check-label"
+        for="isEnabled"
+      ) Habilitada?
+
+    div.form-group
+      label(for="price") Precio:
+      input(
+        type="number"
+        id="price"
+        name="price"
+        class="form-control"
+        placeholder="Ingrese precio"
+        value=data.price
+      )
+
+    input(
+      type="submit"
+      value="Crear"
+      class="btn btn-lg btn-primary btn-block"
+    )

@@ -1,3 +1,5 @@
+// @noflow
+
 const Scrypt = require('scrypt-kdf');
 
 exports.up = function(knex, Promise) {

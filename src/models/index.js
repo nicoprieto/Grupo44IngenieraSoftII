@@ -6,10 +6,13 @@ import Knex from 'knex';
 import helpers, { type THelpers } from '../models.helpers';
 
 import Users from './Users';
+import Residences from './Residences';
 
 export type TModels = {
   // TODO: set typing
   Users: any,
+  Residences: any,
+  ResidencesPhotos: any,
   knex: any,
   helpers: THelpers,
 };
@@ -32,6 +35,8 @@ export default (databasePath: string): TModels | null => {
     // initialize models and return them
     return {
       Users: Users(Model),
+      // will split in Residences and ResidencesPhotos
+      ...Residences(Model),
       helpers,
       knex,
     };

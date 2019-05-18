@@ -10,7 +10,7 @@ type TViewProps = {
   data?: {[string]: any},
 }; 
 
-export const loginViewFile = 'admin/login';
+export const loginViewFile = 'admin/login/index';
 export const loginViewProps: TViewProps = {
   title: 'Login admin - Iniciar sesion',
   data: {
@@ -19,7 +19,7 @@ export const loginViewProps: TViewProps = {
   },
 };
 
-export const dashboardViewFile = 'admin/dashboard';
+export const dashboardViewFile = 'admin/dashboard/index';
 export const dashboardViewProps: TViewProps = {
   title: 'Admin - Dashboard',
 };
