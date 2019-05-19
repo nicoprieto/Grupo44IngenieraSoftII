@@ -48,7 +48,7 @@ export default (helpers: THelpers, models: TModels) => {
   );
 
   router.post(
-    '/',
+    '/create',
     helpers.guard.requireAny('admin/*'),
     (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
       // redirect to login is user doest have admin/* permission
@@ -56,6 +56,8 @@ export default (helpers: THelpers, models: TModels) => {
         res.redirect('/admin/login');
       }
     },
+    // TODO: handle when submit fail but photos are still saved
+    helpers.fileUpload('residences', 'png', ['photos']),
     // $FlowFixMe
     [
       helpers
@@ -69,6 +71,12 @@ export default (helpers: THelpers, models: TModels) => {
         .check('description')
         .exists({ checkFalsy: true })
         .withMessage('Por favor ingrese descripccion de la residencia'),
+
+      helpers
+        .validator
+          .check('photosLength')
+          .custom((value) => parseInt(value, 10) > 0)
+          .withMessage('Por favor ingrese fotos de la residencia'),
 
       helpers
       .validator
@@ -117,7 +125,7 @@ export default (helpers: THelpers, models: TModels) => {
         .exists({ checkFalsy: true })
         .withMessage('Por favor ingrese precio'),
     ],
-    (req: $Request, res: $Response) => postCreate(req, res, helpers, models)
+    (req: $Request, res: $Response) => postCreate(req, res, helpers, models),
   );
 
   return router;

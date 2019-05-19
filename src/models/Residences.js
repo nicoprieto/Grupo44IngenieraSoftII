@@ -18,10 +18,21 @@ export type TResidence = {
   price: number,
   created_at: string,
   updated_at: string,
-  isRemoved: bool, 
+  isRemoved: bool,
 };
 
 export type TResidences = Array<TResidence>;
+
+export type TResidencePhoto = {
+  id: number | null,
+  residences_id: number,
+  filename: string,
+  created_at: string,
+  updated_at: string,
+  isRemoved: bool,
+};
+
+export type TResidencePhotos = Array<TResidencePhoto>;
 
 export default (
   Model: objection.Model

@@ -1,6 +1,9 @@
 extends ../_layout.pug
 
-block form
+block scripts
+  script(src='/js/residences.upload.images.js')
+
+block container
 
   if errors
     ul.my-errors
@@ -8,8 +11,9 @@ block form
         li= error.msg
 
   form(
-    action="/admin/residences"
+    action="/admin/residences/create"
     method="POST"
+    enctype="multipart/form-data"
   )
 
     div.form-group
@@ -30,8 +34,29 @@ block form
         name="description"
         class="form-control"
         placeholder="Ingrese descripción"
-        
       )= data.description
+
+    div.custom-file
+      input(
+        type="hidden"
+        id="photosLength"
+        name="photosLength"
+        value="0"
+      )
+      input(
+        type="file"
+        class="custom-file-input"
+        id="inputPhotos"
+        name="photos"
+        multiple=true
+        accept="image/*"
+      )
+      label(
+        class="custom-file-label"
+        for="inputPhotos"
+      ) Elegir fotos
+
+    div#selectedPhotos.alert.alert-warning
 
     div.form-group
       label(for="address_street") Domicilio calle:
@@ -126,6 +151,7 @@ block form
         type="checkbox"
         class="form-check-input"
         id="isEnabled"
+        name="isEnabled"
         checked=data.isEnabled 
       )
       label(

@@ -8,7 +8,7 @@ import express, {
 import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
-import { type TResidence } from '../../models/Residences';
+import { type TResidence, type TResidencePhoto } from '../../models/Residences';
 
 import {
   residenceViewFile,
@@ -19,7 +19,7 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Residences, helpers: { password, now } }: TModels
+  { Residences, ResidencesPhotos, helpers: { password, now } }: TModels
 ) => {
   const errors = helpers.validator.validationResult(req);
   if(errors.isEmpty()) {
@@ -50,13 +50,22 @@ export default async (
         address_nation,
         address_apartament,
         address_flat,
-        isEnabled,
+        isEnabled: isEnabled === 'on',
         price,
         created_at: now(),
         updated_at: '',
         isRemoved: false,
       };
       const residence = await Residences.query().insert(residenceData);
+      const residencePhotosData = req.files.photos.map(({ filename }): TResidencePhoto => ({
+        id: null,
+        residences_id: residence.id,
+        filename,
+        created_at: now(),
+        updated_at: '',
+        isRemoved: false,
+      }));
+      await Promise.all(residencePhotosData.map((data) => ResidencesPhotos.query().insert(data)));
       res.redirect('/admin/residences');
     // database error
     } catch(e) {
@@ -68,7 +77,7 @@ export default async (
           errors: [
             {
               "location": "body",
-              "msg": "Fallo el ingreso intente de vuelta",
+              "msg": "Fallo la creacion de la residencia, intente de vuelta",
               "param": ""
             }
           ],
