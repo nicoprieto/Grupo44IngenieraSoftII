@@ -16,7 +16,7 @@ import {
   postCreate,
   getUpdate,
   getRemove,
-  deleteRemove,
+  postRemove,
 } from '../../controllers/residences';
 
 // ----------------------
@@ -167,7 +167,7 @@ export default (helpers: THelpers, models: TModels) => {
         res.redirect('/admin/login');
       }
     },
-    (req: $Request, res: $Response) => deleteRemove(req, res, helpers, models),
+    (req: $Request, res: $Response) => postRemove(req, res, helpers, models),
   );
 
   return router;
