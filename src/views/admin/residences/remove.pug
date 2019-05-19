@@ -1,0 +1,21 @@
+extends ../_layout.pug
+
+block container
+
+  h3= title
+
+  form(
+    action=`/admin/residences/${data.id}/remove`
+    method="POST"
+  )
+
+    p= data.title
+    p Esta seguro que se desea eliminar esta residencia?
+    
+
+    div.form-group
+      input(
+        type="submit"
+        value="Eliminar"
+        class="btn btn-lg btn-danger"
+      )

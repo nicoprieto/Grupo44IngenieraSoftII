@@ -56,3 +56,23 @@ export const residenceUpdateViewProps: TCreateViewProps = {
   title: 'Residencia - Editar',
   data: { ...emptyResidence },
 };
+
+// *********************
+//
+// *********************
+
+type TRemoveViewProps = {
+  title: string,
+  errors?: Array<{
+    location: string,
+    msg: string,
+    param: string,
+  }>,
+  data: TResidence,
+}; 
+
+export const residenceRemoveViewFile = 'admin/residences/remove';
+export const residenceRemoveViewProps: TCreateViewProps = {
+  title: 'Residencia - Eliminar',
+  data: { ...emptyResidence },
+};

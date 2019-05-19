@@ -15,6 +15,8 @@ import {
   getCreate,
   postCreate,
   getUpdate,
+  getRemove,
+  deleteRemove,
 } from '../../controllers/residences';
 
 // ----------------------
@@ -142,6 +144,30 @@ export default (helpers: THelpers, models: TModels) => {
       // TODO: how to test isEnabled?
     ],
     (req: $Request, res: $Response) => postCreate(req, res, helpers, models),
+  );
+
+  router.get(
+    '/:id/remove',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => getRemove(req, res, helpers, models),
+  );
+
+  router.post(
+    '/:id/remove',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => deleteRemove(req, res, helpers, models),
   );
 
   return router;
