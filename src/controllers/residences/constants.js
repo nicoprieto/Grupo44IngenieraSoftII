@@ -53,7 +53,7 @@ type TUpdateViewProps = {
 
 export const residenceUpdateViewFile = 'admin/residences/details';
 export const residenceUpdateViewProps: TCreateViewProps = {
-  title: 'Residencia - Editar',
+  title: 'Residencia - Detalle',
   data: { ...emptyResidence },
 };
 

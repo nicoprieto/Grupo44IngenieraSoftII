@@ -24,7 +24,7 @@ export default async (
       listViewFile,
       {
         ...listViewProps,
-        data: await Residences.query().orderBy('id', 'DESC'),
+        data: await Residences.query().where({ isRemoved: false }).orderBy('id', 'DESC'),
       }
     );
   } catch(e) {
