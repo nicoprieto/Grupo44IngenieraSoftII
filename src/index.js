@@ -30,6 +30,7 @@ import morganBody from 'morgan-body';
 morganBody(app);
 
 app.use(express.static('public'));
+app.use(express.static('uploads'));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/../src/views'));

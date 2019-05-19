@@ -10,8 +10,10 @@ block container
       for error in errors
         li= error.msg
 
+  h3= title
+
   form(
-    action="/admin/residences/create"
+    action=data.id !== null ? "/admin/residences/create" : "/admin/residences/create"
     method="POST"
     enctype="multipart/form-data"
   )
@@ -57,6 +59,13 @@ block container
       ) Elegir fotos
 
     div#selectedPhotos.alert.alert-warning
+      if Array.isArray(data.photos)
+        for photo in data.photos
+          img(
+            data-photo-id=photo.id
+            src=`/residences/${photo.filename}`
+            class="selectedPhoto"
+          )
 
     div.form-group
       label(for="address_street") Domicilio calle:
@@ -159,8 +168,11 @@ block container
         for="isEnabled"
       ) Habilitada?
 
-    input(
-      type="submit"
-      value="Crear"
-      class="btn btn-lg btn-primary btn-block"
-    )
+    br
+
+    div.form-group
+      input(
+        type="submit"
+        value=id !== null ? "Editar" : "Crear"
+        class="btn btn-lg btn-primary"
+      )

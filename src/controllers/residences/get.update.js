@@ -17,7 +17,19 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Users }: TModels
+  { Residences, ResidencesPhotos }: TModels
 ) => {
-  res.render(residenceUpdateViewFile, residenceUpdateViewProps);
+  const id = req.params.id;
+  const residence = await Residences.query().findById(id).eager("photos");
+  if(residence instanceof Residences) {
+    res.render(
+      residenceUpdateViewFile,
+      {
+        ...residenceUpdateViewProps,
+        data: { ...residence },
+      }
+    );
+  } else {
+    res.redirect('/admin/residences');
+  } 
 };

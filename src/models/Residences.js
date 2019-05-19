@@ -20,6 +20,7 @@ export type TResidence = {
   created_at: string,
   updated_at: string,
   isRemoved: bool,
+  photos?: TResidencePhotos,
 };
 
 export type TResidences = Array<TResidence>;
@@ -34,6 +35,24 @@ export type TResidencePhoto = {
 };
 
 export type TResidencePhotos = Array<TResidencePhoto>;
+
+export const emptyResidence: TResidence = {
+  id: null,
+  title: '',
+  description: '',
+  address_street: '',
+  address_number: '',
+  address_postal_code: '',
+  address_city: '',
+  address_state: '',
+  address_nation: '',
+  address_apartament: '',
+  address_flat: '',
+  isEnabled: true,
+  created_at: '',
+  updated_at: '',
+  isRemoved: false,
+};
 
 export default (
   Model: objection.Model,

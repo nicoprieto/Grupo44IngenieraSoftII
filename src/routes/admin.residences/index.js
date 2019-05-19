@@ -36,18 +36,7 @@ export default (helpers: THelpers, models: TModels) => {
     (req: $Request, res: $Response) => getList(req, res, helpers, models)
   );
 
-  router.get(
-    '/:id',
-    helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
-    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
-  );
-
+  // TODO put before /:id to avoid failling in that route
   router.get(
     '/create',
     helpers.guard.requireAny('admin/*'),
@@ -58,6 +47,18 @@ export default (helpers: THelpers, models: TModels) => {
       }
     },
     (req: $Request, res: $Response) => getCreate(req, res, helpers, models)
+  );
+
+  router.get(
+    '/:id',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
   );
 
   router.post(
