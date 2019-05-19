@@ -36,7 +36,7 @@ export default (databasePath: string): TModels | null => {
     return {
       Users: Users(Model),
       // will split in Residences and ResidencesPhotos
-      ...Residences(Model),
+      ...Residences(Model, helpers),
       helpers,
       knex,
     };

@@ -2,6 +2,8 @@
 
 import objection from 'objection';
 
+import { type THelpers } from '../models.helpers';
+
 export type TResidence = {
   id: number | null,
   title: string,
@@ -15,7 +17,6 @@ export type TResidence = {
   address_apartament: string,
   address_flat: string,
   isEnabled: bool,
-  price: number,
   created_at: string,
   updated_at: string,
   isRemoved: bool,
@@ -35,10 +36,22 @@ export type TResidencePhoto = {
 export type TResidencePhotos = Array<TResidencePhoto>;
 
 export default (
-  Model: objection.Model
+  Model: objection.Model,
+  helpers: THelpers
 ) => {
 
   class ResidencesPhotos extends Model {
+
+    static getFromReqBody({ body }: any, residenceId: number): TResidencePhotos {
+      return body.photos.map(({ filename }): TResidencePhoto => ({
+        id: null,
+        residences_id: residenceId,
+        filename,
+        created_at: helpers.now(),
+        updated_at: '',
+        isRemoved: false,
+      }));
+    }
 
     static get tableName() {
       return 'residences_photos';
@@ -60,6 +73,40 @@ export default (
   }
 
   class Residences extends Model {
+
+    static getFromReqBody({ body }: any): TResidence {
+      const {
+        title,
+        description,
+        address_street,
+        address_number,
+        address_postal_code,
+        address_city,
+        address_state,
+        address_nation,
+        address_apartament,
+        address_flat,
+        isEnabled,
+        price,
+      } = body;
+      return {
+        id: null,
+        title,
+        description,
+        address_street,
+        address_number,
+        address_postal_code,
+        address_city,
+        address_state,
+        address_nation,
+        address_apartament,
+        address_flat,
+        isEnabled: isEnabled === 'on',
+        created_at: helpers.now(),
+        updated_at: '',
+        isRemoved: false,
+      };
+    }
 
     static get tableName() {
       return 'residences';

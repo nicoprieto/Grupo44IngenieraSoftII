@@ -14,6 +14,7 @@ import {
   getList,
   getCreate,
   postCreate,
+  getUpdate,
 } from '../../controllers/residences';
 
 // ----------------------
@@ -33,6 +34,18 @@ export default (helpers: THelpers, models: TModels) => {
       }
     },
     (req: $Request, res: $Response) => getList(req, res, helpers, models)
+  );
+
+  router.get(
+    '/:id',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
   );
 
   router.get(
@@ -75,8 +88,16 @@ export default (helpers: THelpers, models: TModels) => {
       helpers
         .validator
           .check('photosLength')
-          .custom((value) => parseInt(value, 10) > 0)
-          .withMessage('Por favor ingrese fotos de la residencia'),
+          // look for good case
+          .custom((value) => parseInt(value, 10) >= 1)
+          .withMessage('Por favor ingrese como minimo 1 foto de la residencia'),
+
+      helpers
+        .validator
+          .check('photosLength')
+          // look for good case
+          .custom((value) => parseInt(value, 10) <= 5)
+          .withMessage('Maximo 5 fotos por residencia'),
 
       helpers
       .validator
@@ -118,12 +139,6 @@ export default (helpers: THelpers, models: TModels) => {
       // address_flat is not required
 
       // TODO: how to test isEnabled?
-
-      helpers
-      .validator
-        .check('price')
-        .exists({ checkFalsy: true })
-        .withMessage('Por favor ingrese precio'),
     ],
     (req: $Request, res: $Response) => postCreate(req, res, helpers, models),
   );

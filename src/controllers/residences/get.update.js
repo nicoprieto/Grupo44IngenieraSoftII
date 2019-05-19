@@ -1,4 +1,4 @@
-// $flow
+// @flow
 
 import express, {
   type $Request,
@@ -9,8 +9,8 @@ import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
 import {
-  residenceCreateViewFile,
-  residenceCreateViewProps,
+  residenceUpdateViewFile,
+  residenceUpdateViewProps,
 } from './constants';
 
 export default async (
@@ -19,5 +19,5 @@ export default async (
   helpers: THelpers,
   { Users }: TModels
 ) => {
-  res.render(residenceCreateViewFile, residenceCreateViewProps);
+  res.render(residenceUpdateViewFile, residenceUpdateViewProps);
 };
