@@ -170,11 +170,9 @@ block container
 
     br
 
-    div.form-group(
-      style=(id === null ? 'display:block' : 'display:none')
-    )
+    div.form-group
       input(
         type="submit"
-        value=id !== null ? "Guardar cambios" : "Crear"
+        value=(data.id === null ? "Crear" : "Guardar cambios")
         class="btn btn-lg btn-primary"
       )
