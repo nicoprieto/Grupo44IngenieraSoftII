@@ -29,6 +29,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-flow": "^7.0.0",
     "babel-preset-latest-node": "^3.2.1",
+    "cp-file": "^7.0.0",
     "flow-bin": "^0.98.1",
     "flow-remove-types": "^1.2.3"
   },
