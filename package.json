@@ -9,7 +9,7 @@
     "build": "babel src -d dist",
     "dev": "npm run build && node dist",
     "knex": "knex",
-    "knex-migrate": "knex-migrate"
+    "knex:migrate": "knex-migrate"
   },
   "repository": {
     "type": "git",

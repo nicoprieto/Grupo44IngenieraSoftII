@@ -5,14 +5,16 @@ import Knex from 'knex';
 
 import helpers, { type THelpers } from '../models.helpers';
 
-import Users from './Users';
-import Residences from './Residences';
+import users from './Users';
+import residences from './Residences';
+import reservations from './Reservations';
 
 export type TModels = {
   // TODO: set typing
   Users: any,
   Residences: any,
   ResidencesPhotos: any,
+  Reservations: any,
   knex: any,
   helpers: THelpers,
 };
@@ -33,10 +35,15 @@ export default (databasePath: string): TModels | null => {
     Model.knex(knex);
 
     // initialize models and return them
+    const Users = users(Model);
+    const { Residences, ResidencesPhotos } = residences(Model, helpers);
+    const Reservations = reservations(Model, helpers, { Residences });
+
     return {
-      Users: Users(Model),
-      // will split in Residences and ResidencesPhotos
-      ...Residences(Model, helpers),
+      Users,
+      Residences,
+      ResidencesPhotos,
+      Reservations,
       helpers,
       knex,
     };

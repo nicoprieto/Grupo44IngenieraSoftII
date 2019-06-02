@@ -27,7 +27,7 @@ module.exports = [
 
   {
     id: null,
-    title: 'Nou Camp vivienda',
+    title: 'Ehime vivienda',
     description: 'Hermosa ubicacion a metros del  Ningineer Stadium',
     address_street: '乙46 Uenomachi',
     address_number: '791-1136',

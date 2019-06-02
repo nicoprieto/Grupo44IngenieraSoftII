@@ -38,7 +38,7 @@ export default (helpers: THelpers, models: TModels) => {
     (req: $Request, res: $Response) => getList(req, res, helpers, models)
   );
 
-  // TODO put before /:id to avoid failling in that route
+  // HINT put before /:id to avoid falling in that route
   router.get(
     '/create',
     helpers.guard.requireAny('admin/*'),
@@ -89,14 +89,14 @@ export default (helpers: THelpers, models: TModels) => {
         .withMessage('Por favor ingrese descripccion de la residencia'),
 
       helpers
-        .validator
+      .validator
           .check('photosLength')
           // look for good case
           .custom((value) => parseInt(value, 10) >= 1)
           .withMessage('Por favor ingrese como minimo 1 foto de la residencia'),
 
       helpers
-        .validator
+      .validator
           .check('photosLength')
           // look for good case
           .custom((value) => parseInt(value, 10) <= 5)
@@ -133,7 +133,7 @@ export default (helpers: THelpers, models: TModels) => {
         .withMessage('Por favor ingrese domicilio provincia'),
 
       helpers
-        .validator
+      .validator
           .check('address_nation')
           .exists({ checkFalsy: true })
           .withMessage('Por favor ingrese domicilio pais'),

@@ -20,6 +20,7 @@ export type TResidence = {
   created_at: string,
   updated_at: string,
   isRemoved: bool,
+  // derived from relation, not stored as field
   photos?: TResidencePhotos,
 };
 
@@ -98,7 +99,7 @@ export default (
 
     static get relationMappings () {
       return {
-        idea: {
+        residence: {
           relation: Model.BelongsToOneRelation,
           modelClass: Residences,
           join: {

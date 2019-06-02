@@ -18,8 +18,6 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 10000, // ten seconds, for testing
-    expires: new Date(Date.now() + 3600000),
     maxAge: 3600000 // one hour
   },
   store,

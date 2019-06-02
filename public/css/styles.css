@@ -70,13 +70,18 @@ body {
 */
 .wrapper {
   display: flex;
-  align-items: stretch;
 }
 
 .sidebar {
-  min-width: 250px;
-  max-width: 250px;
+  display: flex;
+  flex: 0;
   background-color: #ddd;
+  flex-direction: column;
+}
+
+.sidebar > div {
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.active {
@@ -85,6 +90,9 @@ body {
 
 .container {
   background-color: #fff;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 #selectedPhotos {
@@ -98,4 +106,22 @@ img.selectedPhoto {
   width: 300px;
   height: 300px;
   margin: 5px;
+}
+
+/* bootstrap-year-calendar css */
+#weekYearCalendar.calendar {
+  border-radius: 0;
+  overflow: unset;
+}
+
+.months-container {
+  display: flex !important;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+#weekYearCalendarRanges {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
 }

@@ -1,0 +1,46 @@
+extends ../_layout.pug
+
+mixin tdDate(start, end)
+  if start === '' || end === ''
+    td Rango no especificado
+  else
+    - arr1 = start.split(' ')[0].split('-')
+    - arr2 = end.split(' ')[0].split('-')
+    td= `${arr1[2]}/${arr1[1]}/${arr1[0]} hasta ${arr2[2]}/${arr2[1]}/${arr2[0]}`
+
+block container
+  if data.length === 0
+    div.alert.alert-info No existen semanas cargadas en el sistema.
+  else 
+    table.table.table-striped
+      thead.thead-dark
+        tr
+          th Id
+          th Residencia
+          th Premium fecha
+          th Subasta fecha
+          th Hotsale fecha
+          th Acciones
+
+      tbody
+        for item in data
+          tr
+            td= item.id
+            td
+              a(
+                href=`/admin/residences/${item.residence.id}`
+                class="btn btn-link"
+              )= item.residence.title
+            +tdDate(item.premium_date_start, item.premium_date_end)
+            +tdDate(item.bidding_date_start, item.bidding_date_end)
+            +tdDate(item.hotsale_date_start, item.hotsale_date_end)
+            td
+              a(
+                href=`/admin/reservations/${item.id}`
+                class="btn btn-link"
+              ) Ver detalle
+              a(
+                href=`/admin/reservations/${item.id}/remove`
+                class="btn btn-link"
+              ) Eliminar
+              

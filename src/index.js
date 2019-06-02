@@ -77,7 +77,6 @@ app.get('/', (req: $Request, res: $Response) => {
 });
 
 import admin from './routes/admin';
-
 app.use(
   '/admin',
   // $FlowFixMe
@@ -85,11 +84,17 @@ app.use(
 );
 
 import adminResidences from './routes/admin.residences';
-
 app.use(
   '/admin/residences',
   // $FlowFixMe
   adminResidences(routesHelpers, models)
+);
+
+import adminReservations from './routes/admin.reservations';
+app.use(
+  '/admin/reservations',
+  // $FlowFixMe
+  adminReservations(routesHelpers, models)
 );
 
 // ****************

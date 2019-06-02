@@ -1,0 +1,166 @@
+extends ../_layout.pug
+
+block stylesheets
+  link(rel='stylesheet', href='/css/bootstrap-year-calendar.min.css')
+  // we are using bootstrap 4, but bootstrap-year-calendar need glyphicons
+  link(rel='stylesheet', href='/css/glyphicons.icons.css')
+
+block scripts
+  script(src='/js/bootstrap-year-calendar.js')
+  script(src='/js/bootstrap-year-calendar.es.js')
+  script(src='/js/weeks.year.calendar.js')
+
+block container
+  if residences.length === 0
+    div.alert.alert-info No puede crear reservas si no tienen residencias creadas
+
+  else
+    if errors
+      ul.my-errors
+        for error in errors
+          li= error.msg
+
+    h3= title
+
+    form(
+      action=data.id !== null ? "/admin/reservations/create" : "/admin/reservations/create"
+      method="POST"
+    )
+
+      div.form-group
+        label(for="title") Titulo:
+        input(
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          placeholder="Ingrese un titulo"
+          value=data.title
+        )
+
+      div.form-group
+        label(for="description") Descripción:
+        textarea(
+          id="description"
+          name="description"
+          class="form-control"
+          placeholder="Ingrese una descripción"
+        )= data.description
+
+      div.form-group
+        label(for="residences") Residencia:
+        select#residences.form-control(name="residences_id")
+          option(selected value="0") Seleccione una residencia...
+          for residence in residences
+            option(value=residence.id)= residence.title
+      
+      label Rangos:
+      div.alert.alert-info
+        ul
+          li 1. Haga foco en el campo rango que desea settear, ya sea "Rango comienzo" o "Rango fin"
+          li 2. Toque sobre la fecha deseada a marca
+          li 3. Una vez setteado el rango, confirmelo aprentando en los respectivos botones
+
+      div#weekYearCalendarRanges
+        div
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangePremiumStart"
+              placeholder="Rango comienzo"
+              class="form-control"
+              name="premium_date_start"
+              value=data.premium_date_start
+            )
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangePremiumEnd"
+              placeholder="Rango fin"
+              class="form-control"
+              name="premium_date_end"
+              value=data.premium_date_end
+            )
+          div.form-group
+            button(
+              type="button"
+              id="weekYearCalendarRangePremium"
+              class="btn btn-warning w-100"
+            ) Rango Premium
+
+        div
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangeBiddingStart"
+              placeholder="Rango comienzo"
+              class="form-control"
+              name="bidding_date_start"
+              value=data.bidding_date_start
+            )
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangeBiddingEnd"
+              placeholder="Rango fin"
+              class="form-control"
+              name="bidding_date_end"
+              value=data.bidding_date_end
+            )
+          div.form-group
+            button(
+              type="button"
+              id="weekYearCalendarRangeBidding"
+              class="btn btn-success w-100"
+            ) Rango Subasta
+
+        div
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangeHotSaleStart"
+              placeholder="Rango comienzo"
+              class="form-control"
+              name="hotsale_date_start"
+              value=data.hotsale_date_start
+            )
+          div.form-group
+            input(
+              type="text"
+              id="weekYearCalendarRangeHotSaleEnd"
+              placeholder="Rango fin"
+              class="form-control"
+              name="hotsale_date_end"
+              value=data.hotsale_date_end
+            )
+          div.form-group
+            button(
+              type="button"
+              id="weekYearCalendarRangeHotSale"
+              class="btn btn-danger w-100"
+            ) Rango Hot sale
+
+      div#weekYearCalendar
+      
+      br
+
+      div.form-group
+        div.form-check
+          input(
+            type="checkbox"
+            class="form-check-input"
+            id="isEnabled"
+            name="isEnabled"
+            checked=data.isEnabled 
+          )
+          label(
+            class="form-check-label"
+            for="isEnabled"
+          ) Habilitada?
+
+      div.form-group
+        input(
+          type="submit"
+          value=(data.id === null ? "Crear" : "Guardar cambios")
+          class="btn btn-lg btn-primary"
+        )
