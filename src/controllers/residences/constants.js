@@ -72,7 +72,7 @@ type TRemoveViewProps = {
 }; 
 
 export const residenceRemoveViewFile = 'admin/residences/remove';
-export const residenceRemoveViewProps: TCreateViewProps = {
+export const residenceRemoveViewProps: TRemoveViewProps = {
   title: 'Residencia - Eliminar',
   data: { ...emptyResidence },
 };

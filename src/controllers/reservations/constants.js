@@ -60,7 +60,7 @@ type TUpdateViewProps = {
 
 export const reservationUpdateViewFile = 'admin/reservations/details';
 export const reservationUpdateViewProps: TCreateViewProps = {
-  title: 'Residencia - Detalle',
+  title: 'Reservas - Detalle',
   data: { ...emptyReservation },
   residences: [],
 };
@@ -68,3 +68,19 @@ export const reservationUpdateViewProps: TCreateViewProps = {
 // *********************
 //
 // *********************
+
+type TRemoveViewProps = {
+  title: string,
+  errors?: Array<{
+    location: string,
+    msg: string,
+    param: string,
+  }>,
+  data: TReservation,
+}; 
+
+export const reservationRemoveViewFile = 'admin/reservations/remove';
+export const reservationRemoveViewProps: TRemoveViewProps = {
+  title: 'Reservas - Eliminar',
+  data: { ...emptyReservation },
+};

@@ -5,12 +5,12 @@ block container
   h3= title
 
   form(
-    action=`/admin/residences/${data.id}/remove`
+    action=`/admin/reservations/${data.id}/remove`
     method="POST"
   )
 
     p= data.title
-    p Esta seguro que se desea eliminar esta residencia?
+    p Esta seguro que se desea eliminar esta reserva?
 
     div.form-group
       input(
