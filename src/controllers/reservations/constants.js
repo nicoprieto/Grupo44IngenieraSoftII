@@ -46,3 +46,25 @@ export const reservationCreateViewProps: TCreateViewProps = {
 // *********************
 //
 // *********************
+
+type TUpdateViewProps = {
+  title: string,
+  errors?: Array<{
+    location: string,
+    msg: string,
+    param: string,
+  }>,
+  data: TReservation,
+  residences: TResidences,
+};
+
+export const reservationUpdateViewFile = 'admin/reservations/details';
+export const reservationUpdateViewProps: TCreateViewProps = {
+  title: 'Residencia - Detalle',
+  data: { ...emptyReservation },
+  residences: [],
+};
+
+// *********************
+//
+// *********************

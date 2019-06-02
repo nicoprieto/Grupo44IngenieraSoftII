@@ -46,7 +46,10 @@ export default async (
               "param": ""
             }
           ],
-          data: req.body,
+          data: {
+            id: null,
+            ...req.body,
+          },
         }
       );
     }
@@ -57,7 +60,10 @@ export default async (
       {
         ...residenceCreateViewProps,
         errors: errors.array(),
-        data: req.body,
+        data: {
+          id: null,
+          ...req.body,
+        },
       }
     );
   }

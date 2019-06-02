@@ -82,8 +82,7 @@ export default (
         bidding_date_end: helpers.localedateToDatetimeString(bidding_date_end),
         // these fields are optional
         hotsale_date_start: helpers.localedateToDatetimeString(hotsale_date_start) || '',
-        hotsale_date_end: helpers.localedateToDatetimeString(bidding_date_end) || '',
-        hotsale_date_end: helpers.localedateToDatetimeString(bidding_date_end) || '',
+        hotsale_date_end: helpers.localedateToDatetimeString(hotsale_date_end) || '',
         purchase_method: null,
         isEnabled: isEnabled === 'on',
         created_at: helpers.now(),

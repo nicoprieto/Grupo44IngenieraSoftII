@@ -23,7 +23,7 @@ block container
     h3= title
 
     form(
-      action=data.id !== null ? "/admin/reservations/create" : "/admin/reservations/create"
+      action=data.id === null ? "/admin/reservations/create" : "/admin/reservations/update"
       method="POST"
     )
 
@@ -50,9 +50,15 @@ block container
       div.form-group
         label(for="residences") Residencia:
         select#residences.form-control(name="residences_id")
-          option(selected value="0") Seleccione una residencia...
+          option(
+            value="0"
+            selected=data.id === null
+          ) Seleccione una residencia...
           for residence in residences
-            option(value=residence.id)= residence.title
+            option(
+              value=residence.id
+              selected=data.residences_id === residence.id
+            )= residence.title
       
       label Rangos:
       div.alert.alert-info

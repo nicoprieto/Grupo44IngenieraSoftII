@@ -44,7 +44,10 @@ export default async (
               "param": ""
             }
           ],
-          data: req.body,
+          data: {
+            id: null,
+            ...req.body,
+          },
           residences,
         }
       );
@@ -56,7 +59,10 @@ export default async (
       {
         ...reservationCreateViewProps,
         errors: errors.array(),
-        data: req.body,
+        data: {
+          id: null,
+          ...req.body,
+        },
         residences,
       }
     );

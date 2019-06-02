@@ -14,6 +14,7 @@ import {
   getList,
   getCreate,
   postCreate,
+  getUpdate,
 } from '../../controllers/reservations';
 
 // ----------------------
@@ -96,6 +97,18 @@ export default (helpers: THelpers, models: TModels) => {
       // TODO: how to test isEnabled?
     ],
     (req: $Request, res: $Response) => postCreate(req, res, helpers, models),
+  );
+
+  router.get(
+    '/:id',
+    helpers.guard.requireAny('admin/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      // redirect to login is user doest have admin/* permission
+      if(err.isGuard) {
+        res.redirect('/admin/login');
+      }
+    },
+    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
   );
 
   return router;
