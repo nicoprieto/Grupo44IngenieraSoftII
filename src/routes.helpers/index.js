@@ -12,10 +12,13 @@ import fileUpload, {
   type TFileUpload,
 } from './file.upload';
 
+import HttpStatusCodes from './http.status.codes';
+
 export type THelpers = {
   guard: TGuard,
   validator: TValidator,
   fileUpload: TFileUpload,
+  HttpStatusCodes: typeof HttpStatusCodes,
 };
 
 export default {
@@ -23,4 +26,5 @@ export default {
   guard: guard(),
   validator,
   fileUpload,
+  HttpStatusCodes,
 };

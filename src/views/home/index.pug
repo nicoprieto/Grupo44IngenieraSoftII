@@ -1,25 +1,32 @@
 extends ./_layout.pug
 
 block container
-  if data.client.id === null
-    a(
-      href="/clients/login"
-      title="Iniciar sesion"
-      class="btn btn-link"
-    ) Iniciar sesion
+  nav
+    if data.client.id === null
+      a(
+        href="/clients/login"
+        title="Iniciar sesion"
+        class="btn btn-link"
+      ) Iniciar sesion
 
-    a(
-      href="/clients/register"
-      title="Crear cuenta"
-      class="btn btn-link"
-    ) Crear cuenta
+      a(
+        href="/clients/register"
+        title="Crear cuenta"
+        class="btn btn-link"
+      ) Crear cuenta
 
-  else
-    label= `Hola ${data.client.name} ${data.client.surname}`
+    else
+      label= `Hola ${data.client.name} ${data.client.surname}`
 
-    a(
-      href="/clients/logout"
-      title="Cerrar sesion"
-      class="btn btn-link"
-    ) Cerrar sesion
-    
+      a(
+        href=`/clients/${data.client.id}`
+        title="Crear cuenta"
+        class="btn btn-link"
+      ) Ver perfil
+
+      a(
+        href="/clients/logout"
+        title="Cerrar sesion"
+        class="btn btn-link"
+      ) Cerrar sesion
+      

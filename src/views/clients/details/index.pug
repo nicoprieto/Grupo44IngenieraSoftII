@@ -9,8 +9,11 @@ block container
 
   h3= title
 
+  if typeof message !== 'undefined'
+    div.alert.alert-success= message
+
   form(
-    action=data.id === null ? "/clients/register" : "/clients/update"
+    action=data.id === null ? "/clients/register" : `/clients/${data.id}`
     method="POST"
   )
 

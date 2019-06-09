@@ -5,7 +5,7 @@ import {
   emptyClient,
 } from '../../models/Clients';
 
-type TRegisterProps = {
+type TDetailsProps = {
   title: string,
   errors?: Array<{
     location: string,
@@ -13,11 +13,18 @@ type TRegisterProps = {
     param: string,
   }>,
   data: TClient,
+  message?: string,
 }; 
 
 export const registerViewFile = 'clients/details/index';
-export const registerViewProps: TRegisterProps = {
+export const registerViewProps: TDetailsProps = {
   title: 'Cliente - Registrarse',
+  data: emptyClient,
+};
+
+export const updateViewFile = 'clients/details/index';
+export const updateViewProps: TDetailsProps = {
+  title: 'Cliente - Perfil',
   data: emptyClient,
 };
 
