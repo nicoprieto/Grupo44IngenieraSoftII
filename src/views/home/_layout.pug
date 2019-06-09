@@ -13,5 +13,34 @@ html
     block scripts
   body
 
+    nav
+      if client.id === null
+        a(
+          href="/clients/login"
+          title="Iniciar sesion"
+          class="btn btn-link"
+        ) Iniciar sesion
+
+        a(
+          href="/clients/register"
+          title="Crear cuenta"
+          class="btn btn-link"
+        ) Crear cuenta
+
+      else
+        label= `Hola ${client.name} ${client.surname}`
+
+        a(
+          href=`/clients/${client.id}`
+          title="Crear cuenta"
+          class="btn btn-link"
+        ) Ver perfil
+
+        a(
+          href="/clients/logout"
+          title="Cerrar sesion"
+          class="btn btn-link"
+        ) Cerrar sesion
+
     div.container
       block container

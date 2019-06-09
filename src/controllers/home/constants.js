@@ -5,17 +5,19 @@ import {
   emptyClient,
 } from '../../models/Clients';
 
+import {
+  type TWeeks,
+} from '../../models/Weeks';
+
 type THomeProps = {
   title: string,
-  data: {
-    client: TClient, 
-  },
+  client: TClient,
+  weeks: TWeeks
 }; 
 
 export const homeViewFile = 'home/index';
 export const homeViewProps: THomeProps = {
   title: 'Home Switch Home - Bienvenido',
-  data: {
-    client: emptyClient,
-  }
+  client: emptyClient,
+  weeks: [],
 };

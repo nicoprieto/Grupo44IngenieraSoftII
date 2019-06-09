@@ -93,6 +93,13 @@ app.use(
   adminReservations(routesHelpers, models)
 );
 
+import adminWeeks from './routes/admin.weeks';
+app.use(
+  '/admin/weeks',
+  // $FlowFixMe
+  adminWeeks(routesHelpers, models)
+);
+
 import clients from './routes/clients';
 app.use(
   '/clients',

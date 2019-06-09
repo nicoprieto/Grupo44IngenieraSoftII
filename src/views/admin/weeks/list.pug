@@ -1,0 +1,36 @@
+extends ../_layout.pug
+
+block container
+  if data.length === 0
+    div.alert.alert-info No existen semanas cargadas en el sistema.
+  else 
+    table.table.table-striped
+      thead.thead-dark
+        tr
+          th Id
+          th Residencia
+          th Semana
+          th Anio
+          th Acciones
+
+      tbody
+        for item in data
+          tr
+            td= item.id
+            td
+              a(
+                href=`/admin/residences/${item.residence.id}`
+                class="btn btn-link"
+              )= item.residence.title
+            td= item.number
+            td= item.year
+            td
+              a(
+                href=`/admin/weeks/${item.id}`
+                class="btn btn-link"
+              ) Ver detalle
+              a(
+                href=`/admin/weeks/${item.id}/remove`
+                class="btn btn-link"
+              ) Eliminar
+              

@@ -23,7 +23,7 @@ html
       
       nav.sidebar
         div
-          p Residencias
+          label Residencias
           ul.list-group
             li(class="")
               a(
@@ -37,7 +37,21 @@ html
               ) Crear residencia
 
         div
-          p Reservas
+          label Semanas
+          ul.list-group
+            li(class="")
+              a(
+                href="/admin/weeks"
+                class="btn btn-link"
+              ) Listado
+            li(class="")
+              a(
+                href="/admin/weeks/create"
+                class="btn btn-link"
+              ) Crear semana      
+
+        div
+          label Reservas
           ul.list-group
             li(class="")
               a(

@@ -9,14 +9,15 @@ import users from './Users';
 import residences from './Residences';
 import reservations from './Reservations';
 import clients from './Clients';
+import weeks from './Weeks';
 
 export type TModels = {
-  // TODO: set typing
-  Users: any,
-  Residences: any,
-  ResidencesPhotos: any,
-  Reservations: any,
-  Clients: any,
+  Users: Model,
+  Residences: Model,
+  ResidencesPhotos: Model,
+  Reservations: Model,
+  Clients: Model,
+  Weeks: Model,
   knex: any,
   helpers: THelpers,
 };
@@ -41,6 +42,7 @@ export default (databasePath: string): TModels | null => {
     const { Residences, ResidencesPhotos } = residences(Model, helpers);
     const Reservations = reservations(Model, helpers, { Residences });
     const Clients = clients(Model, helpers);
+    const Weeks = weeks(Model, helpers, { Residences });
 
     return {
       Users,
@@ -48,6 +50,7 @@ export default (databasePath: string): TModels | null => {
       ResidencesPhotos,
       Reservations,
       Clients,
+      Weeks,
       helpers,
       knex,
     };

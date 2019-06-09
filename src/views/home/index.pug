@@ -1,32 +1,23 @@
 extends ./_layout.pug
 
 block container
-  nav
-    if data.client.id === null
-      a(
-        href="/clients/login"
-        title="Iniciar sesion"
-        class="btn btn-link"
-      ) Iniciar sesion
+  for week in weeks
+    label= `Semana ${week.number} del ${week.year}`
+    form(
+      method="POST"
+      action="/clients/reservations"
+    )
+      h3= `Residencia ${week.residence.title}`
+      p= week.residence.description
+      div
+        for photo in week.residence.photos
+          img(
+            src=`/residences/${photo.filename}`
+            alt=`Foto residencia ${photo.id}`
+          )
+      button(
+        type="submit"
+        class="btn btn-success"
+      ) Reservar
 
-      a(
-        href="/clients/register"
-        title="Crear cuenta"
-        class="btn btn-link"
-      ) Crear cuenta
-
-    else
-      label= `Hola ${data.client.name} ${data.client.surname}`
-
-      a(
-        href=`/clients/${data.client.id}`
-        title="Crear cuenta"
-        class="btn btn-link"
-      ) Ver perfil
-
-      a(
-        href="/clients/logout"
-        title="Cerrar sesion"
-        class="btn btn-link"
-      ) Cerrar sesion
-      
+    br
