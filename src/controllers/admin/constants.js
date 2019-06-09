@@ -1,17 +1,20 @@
 // @flow
 
-type TViewProps = {
+type TLoginProps = {
   title: string,
   errors?: Array<{
     location: string,
     msg: string,
     param: string,
   }>,
-  data?: {[string]: any},
+  data: {
+    email: string,
+    pass: string,
+  },
 }; 
 
 export const loginViewFile = 'admin/login/index';
-export const loginViewProps: TViewProps = {
+export const loginViewProps: TLoginProps = {
   title: 'Login admin - Iniciar sesion',
   data: {
     email: '',
@@ -19,7 +22,19 @@ export const loginViewProps: TViewProps = {
   },
 };
 
+// *********************
+//
+// *********************
+
+type TDashboardProps = {
+  title: string,
+};
+
 export const dashboardViewFile = 'admin/dashboard/index';
-export const dashboardViewProps: TViewProps = {
+export const dashboardViewProps: TDashboardProps = {
   title: 'Admin - Dashboard',
 };
+
+// *********************
+//
+// *********************

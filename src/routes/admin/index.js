@@ -26,11 +26,23 @@ export default (helpers: THelpers, models: TModels) => {
 
   router.get(
     '/login',
+    helpers.guard.requireAny('guest/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      if(err.isGuard) {
+        res.redirect('/');
+      }
+    },
     (req: $Request, res: $Response) => getLogin(req, res, helpers, models)
   );
 
   router.post(
     '/login',
+    helpers.guard.requireAny('guest/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      if(err.isGuard) {
+        res.redirect('/');
+      }
+    },
     // $FlowFixMe
     [
       helpers

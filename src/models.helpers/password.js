@@ -10,7 +10,7 @@ export type TPassword = {
 export default {
 
   async generatePassword(pass: string): Promise<string> {
-    return await Scrypt.kdf(pass, { logN: 15 }).toString('hex');
+    return (await Scrypt.kdf(pass, { logN: 15 })).toString('hex');
   },
 
   async verifyPassword(unhashedPassword: string, hashedPassword: string): Promise<bool> {

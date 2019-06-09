@@ -8,6 +8,7 @@ import helpers, { type THelpers } from '../models.helpers';
 import users from './Users';
 import residences from './Residences';
 import reservations from './Reservations';
+import clients from './Clients';
 
 export type TModels = {
   // TODO: set typing
@@ -15,6 +16,7 @@ export type TModels = {
   Residences: any,
   ResidencesPhotos: any,
   Reservations: any,
+  Clients: any,
   knex: any,
   helpers: THelpers,
 };
@@ -38,12 +40,14 @@ export default (databasePath: string): TModels | null => {
     const Users = users(Model);
     const { Residences, ResidencesPhotos } = residences(Model, helpers);
     const Reservations = reservations(Model, helpers, { Residences });
+    const Clients = clients(Model, helpers);
 
     return {
       Users,
       Residences,
       ResidencesPhotos,
       Reservations,
+      Clients,
       helpers,
       knex,
     };

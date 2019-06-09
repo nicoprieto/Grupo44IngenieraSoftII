@@ -19,9 +19,25 @@ export default () => {
     },
   });
 
+  const client = new Guard.Role('client', {
+    can: ['client/*'],
+    func: async (req) => {
+      return req.session.isClient;
+    },
+  });
+
+  const guest = new Guard.Role('guest', {
+    can: ['guest/*'],
+    func: async (req) => {
+      return !req.session.isClient && !req.session.isAdmin;
+    },
+  });
+
   const guard = new Guard();
 
   guard.roles.addRole(admin);
+  guard.roles.addRole(client);
+  guard.roles.addRole(guest);
 
   return guard;
 };

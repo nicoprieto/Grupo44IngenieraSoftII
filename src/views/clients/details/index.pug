@@ -1,0 +1,109 @@
+extends ../_layout.pug
+
+block container
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  h3= title
+
+  form(
+    action=data.id === null ? "/clients/register" : "/clients/update"
+    method="POST"
+  )
+
+    div.form-group
+      label(for="name") Nombre:
+      input(
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        placeholder="Ingrese su nombre"
+        value=data.name
+      )
+
+    div.form-group
+      label(for="surname") Apellido:
+      input(
+        type="text"
+        id="surname"
+        name="surname"
+        class="form-control"
+        placeholder="Ingrese su apellido"
+        value=data.surname
+      )
+
+    div.form-group
+      label(for="email") Email:
+      input(
+        type="text"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="Ingrese su email"
+        value=data.email
+      )
+
+    div.form-group
+      label(for="document_number") Numero de documento:
+      input(
+        type="text"
+        id="document_number"
+        name="document_number"
+        class="form-control"
+        placeholder="Ingrese su numero de documento"
+        value=data.document_number
+      )
+
+    div.form-group
+      label(for="phone") Telefono:
+      input(
+        type="text"
+        id="phone"
+        name="phone"
+        class="form-control"
+        placeholder="Ingrese su telefono"
+        value=data.phone
+      )
+
+    div.form-group
+      label(for="address") Direccion:
+      textarea(
+        id="address"
+        name="address"
+        class="form-control"
+        placeholder="Ingrese su direccion"
+      )= data.address
+
+    if data.id === null
+      div.form-group
+        label(for="pass") Contrasena (min 6 caracteres):
+        input(
+          type="password"
+          id="pass"
+          name="pass"
+          class="form-control"
+          placeholder="Ingrese una contrasena"
+        )
+
+      div.form-group
+        label(for="repass") Re ingrese contrasena:
+        input(
+          type="password"
+          id="repass"
+          name="repass"
+          class="form-control"
+          placeholder="Re igrese una contrasena"
+        )
+
+    br
+
+    div.form-group
+      input(
+        type="submit"
+        value=(data.id === null ? "Registrarse" : "Guardar cambios")
+        class="btn btn-lg btn-primary"
+      )

@@ -17,14 +17,14 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Users, helpers: { password } }: TModels
+  { Clients, helpers: { password } }: TModels
 ) => {
   const errors = helpers.validator.validationResult(req);
   if(errors.isEmpty()) {
     const { email, pass } = req.body;
     try {
-      const user = await Users.query().where({ email });
-      // no existe user con el email ingresado
+      const user = await Clients.query().where({ email });
+      // no existe client con el email ingresado
       if(user.length === 0) {
         res.render(
           loginViewFile,
@@ -49,8 +49,9 @@ export default async (
         // that is stored in the user table
         if(await password.verifyPassword(pass, hashedPassword)) {
           // set session to persist that this is an admin user
-          req.session.isAdmin = true;
-          res.redirect('/admin/dashboard');
+          req.session.isClient = true;
+          req.session.clientId = foundUser.id;
+          res.redirect('/');
         } else {
           res.render(
             loginViewFile,

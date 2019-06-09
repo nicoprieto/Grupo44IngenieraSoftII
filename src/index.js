@@ -72,10 +72,6 @@ initSession(app, models.knex);
 
 import routesHelpers from './routes.helpers';
 
-app.get('/', (req: $Request, res: $Response) => {
-  res.send('Hello World!');
-});
-
 import admin from './routes/admin';
 app.use(
   '/admin',
@@ -95,6 +91,20 @@ app.use(
   '/admin/reservations',
   // $FlowFixMe
   adminReservations(routesHelpers, models)
+);
+
+import clients from './routes/clients';
+app.use(
+  '/clients',
+  // $FlowFixMe
+  clients(routesHelpers, models)
+);
+
+import home from './routes/home';
+app.use(
+  '/',
+  // $FlowFixMe
+  home(routesHelpers, models)
 );
 
 // ****************
