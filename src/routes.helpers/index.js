@@ -14,11 +14,14 @@ import fileUpload, {
 
 import HttpStatusCodes from './http.status.codes';
 
+import isBirthDateAdultAge from './is.birth.date.adult.age';
+
 export type THelpers = {
   guard: TGuard,
   validator: TValidator,
   fileUpload: TFileUpload,
   HttpStatusCodes: typeof HttpStatusCodes,
+  isBirthDateAdultAge: typeof isBirthDateAdultAge,
 };
 
 export default {
@@ -27,4 +30,5 @@ export default {
   validator,
   fileUpload,
   HttpStatusCodes,
+  isBirthDateAdultAge,
 };

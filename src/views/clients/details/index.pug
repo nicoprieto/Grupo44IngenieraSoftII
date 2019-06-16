@@ -1,5 +1,30 @@
 extends ../_layout.pug
 
+block stylesheets
+  link(rel='stylesheet', href='/css/jquery-ui.min.css')
+  // this is a custom datetimepicker
+
+block scripts
+  script(src='/js/jquery-ui.min.js')
+  script(src='/js/datepicker-es.js')
+  script.
+    $(function() {
+      $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+      $('.birth_date-calendar').datepicker({
+        dateFormat: "dd/mm/yy",
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        onChangeMonthYear: function (year, month, inst) {
+            var date = $(".birth_date-calendar").val();
+            if ($.trim(date) != "") {
+                var newDate = inst.currentDay + "/" + (month < 10 ? "0" + month : month) + "/" + year;
+                $(".birth_date-calendar").val(newDate);
+            }
+        }
+      });
+    });
+
 block container
 
   if errors
@@ -37,6 +62,18 @@ block container
         class="form-control"
         placeholder="Ingrese su apellido"
         value=data.surname
+      )
+
+    div.form-group
+      label(for="birth_date") Fecha de nacimiento:
+      input(
+        type="text"
+        id="birth_date"
+        name="birth_date"
+        class="form-control birth_date-calendar"
+        placeholder="Ingrese su fecha de nacimiento"
+        value=data.birth_date
+        autocomplete="off"
       )
 
     div.form-group
@@ -99,7 +136,54 @@ block container
           id="repass"
           name="repass"
           class="form-control"
-          placeholder="Re igrese una contrasena"
+          placeholder="Re ingrese una contrasena"
+        )
+
+    div.alert.alert-info
+      h6 Tarjeta de credito
+
+      div.form-group
+        label(for="credit_card_number") Numero:
+        input(
+          type="text"
+          id="credit_card_number"
+          name="credit_card_number"
+          class="form-control"
+          placeholder="Ingrese numero"
+          value=data.credit_card_number
+        )
+
+      div.form-group
+        label(for="credit_card_expiration") Fecha de expiracion (dd/yy):
+        input(
+          type="text"
+          id="credit_card_expiration"
+          name="credit_card_expiration"
+          class="form-control"
+          placeholder="Ingrese fecha de expiracion"
+          value=data.credit_card_expiration
+        )
+
+      div.form-group
+        label(for="credit_card_owner") Nombre del titular (tal cual esta escrito en la tarjeta):
+        input(
+          type="text"
+          id="credit_card_owner"
+          name="credit_card_owner"
+          class="form-control"
+          placeholder="Ingrese nombre del titular"
+          value=data.credit_card_owner
+        )
+
+      div.form-group
+        label(for="credit_card_security_code") Codigo de seguridad:
+        input(
+          type="text"
+          id="credit_card_security_code"
+          name="credit_card_security_code"
+          class="form-control"
+          placeholder="Ingrese codigo de seguridad"
+          value=data.credit_card_security_code
         )
 
     br
@@ -108,5 +192,5 @@ block container
       input(
         type="submit"
         value=(data.id === null ? "Registrarse" : "Guardar cambios")
-        class="btn btn-lg btn-primary"
+        class="btn btn-lg btn-primary btn-block"
       )

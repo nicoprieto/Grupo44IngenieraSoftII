@@ -13,34 +13,50 @@ html
     block scripts
   body
 
-    nav
-      if client.id === null
-        a(
-          href="/clients/login"
-          title="Iniciar sesion"
-          class="btn btn-link"
-        ) Iniciar sesion
+    header.home-header
+      img(
+        src="/images/logo.png"
+        class="home-logo"
+      )
 
-        a(
-          href="/clients/register"
-          title="Crear cuenta"
-          class="btn btn-link"
-        ) Crear cuenta
+    nav.home-nav
+      if client.id === null
+        div
+          label
+            a(
+              href="/clients/login"
+              title="Iniciar sesion"
+              class="btn btn-link"
+            ) Iniciar sesion
+
+          label
+            a(
+              href="/clients/register"
+              title="Crear cuenta"
+              class="btn btn-link"
+            ) Crear cuenta
 
       else
-        label= `Hola ${client.name} ${client.surname}`
+        div
+          label.label= `Hola, ${client.name} ${client.surname}`
+        
+        div
+          label.label= `${client.email}`
 
-        a(
-          href=`/clients/${client.id}`
-          title="Crear cuenta"
-          class="btn btn-link"
-        ) Ver perfil
+        div
+          label
+            a(
+              href=`/clients/${client.id}`
+              title="Crear cuenta"
+              class="btn btn-link btn-sm"
+            ) Ver perfil
 
-        a(
-          href="/clients/logout"
-          title="Cerrar sesion"
-          class="btn btn-link"
-        ) Cerrar sesion
+          label
+            a(
+              href="/clients/logout"
+              title="Cerrar sesion"
+              class="btn btn-link btn-sm"
+            ) Cerrar sesion
 
     div.container
       block container

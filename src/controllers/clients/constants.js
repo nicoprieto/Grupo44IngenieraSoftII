@@ -22,9 +22,15 @@ export const registerViewProps: TDetailsProps = {
   data: emptyClient,
 };
 
+export const profileViewFile = 'clients/profile/index';
+export const profileViewProps: TDetailsProps = {
+  title: 'Cliente - Perfil',
+  data: emptyClient,
+};
+
 export const updateViewFile = 'clients/details/index';
 export const updateViewProps: TDetailsProps = {
-  title: 'Cliente - Perfil',
+  title: 'Cliente - Editar Perfil',
   data: emptyClient,
 };
 

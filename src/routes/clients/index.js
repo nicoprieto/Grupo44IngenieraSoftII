@@ -16,6 +16,7 @@ import {
   getRegister,
   postRegister,
   getLogout,
+  getProfile,
   getUpdate,
   postUpdate,
 } from '../../controllers/clients';
@@ -38,6 +39,17 @@ export default (helpers: THelpers, models: TModels) => {
         .check('surname')
         .exists({ checkFalsy: true })
         .withMessage('Por favor ingrese su apellido'),
+    birth_dateEmpty: helpers
+      .validator
+        .check('birth_date')
+        .exists({ checkFalsy: true })
+        .withMessage('Por favor ingrese su fecha de nacimiento'),
+    birth_dateIsAdult: helpers
+      .validator
+      .check('birth_date')
+      // check for the good case
+      .custom((value) => helpers.isBirthDateAdultAge(value))
+      .withMessage('Debe tener mas de 18 años para poder usar el sitio'),
     emailEmpty: helpers
       .validator
         .check('email')
@@ -79,6 +91,28 @@ export default (helpers: THelpers, models: TModels) => {
       .check('repass')
       .custom((value, { req }) => value === req.body.pass)
       .withMessage('Las contrasena no son coindicentes'),
+    credit_card_number: helpers
+      .validator
+        .check('credit_card_number')
+        // check for the good case
+        .custom((value) => !isNaN(value))
+        .withMessage('Numero de tarjeta de credito es incorrecto'),
+    credit_card_expiration: helpers
+      .validator
+        .check('credit_card_expiration')
+        // check for the good case
+        .custom((value) => /\d{2}\/\d{2}/.test(value))
+        .withMessage('Fecha de expiracion es incorrecto'),
+        credit_card_owner: helpers
+      .validator
+        .check('credit_card_owner')
+        .exists({ checkFalsy: true })
+        .withMessage('Ingrese nombre del titular de la tarjeta de credito'),
+    credit_card_security_code: helpers
+      .validator
+      .check('credit_card_security_code')
+      .custom((value) => /\d{3}/.test(value))
+      .withMessage('Codigo de seguridad es invalido'),
   };
 
   router.get(
@@ -139,6 +173,8 @@ export default (helpers: THelpers, models: TModels) => {
     [
       validations.name,
       validations.surname,
+      validations.birth_dateEmpty,
+      validations.birth_dateIsAdult,
       validations.emailEmpty,
       validations.emailInvalid,
       validations.document_numberEmpty,
@@ -147,6 +183,10 @@ export default (helpers: THelpers, models: TModels) => {
       validations.address,
       validations.pass,
       validations.respass,
+      validations.credit_card_number,
+      validations.credit_card_expiration,
+      validations.credit_card_owner,
+      validations.credit_card_security_code,
     ],
     (req: $Request, res: $Response) => postRegister(req, res, helpers, models)
   );
@@ -170,7 +210,7 @@ export default (helpers: THelpers, models: TModels) => {
         res.redirect('/');
       }
     },
-    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
+    (req: $Request, res: $Response) => getProfile(req, res, helpers, models)
   );
 
   router.post(

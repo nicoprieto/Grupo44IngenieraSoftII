@@ -2,11 +2,7 @@ extends ./_layout.pug
 
 block container
   for week in weeks
-    label= `Semana ${week.number} del ${week.year}`
-    form(
-      method="POST"
-      action="/clients/reservations"
-    )
+    div.home-residence
       h3= `Residencia ${week.residence.title}`
       p= week.residence.description
       div
@@ -15,9 +11,9 @@ block container
             src=`/residences/${photo.filename}`
             alt=`Foto residencia ${photo.id}`
           )
-      button(
-        type="submit"
-        class="btn btn-success"
-      ) Reservar
+      br
 
-    br
+      a(
+        title="Ver mas informacion.."
+        href=`/residences/${week.residence.id}`
+      ) Ver mas informacion...

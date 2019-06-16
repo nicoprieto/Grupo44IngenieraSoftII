@@ -9,8 +9,8 @@ import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
 import {
-  updateViewFile,
-  updateViewProps,
+  profileViewFile,
+  profileViewProps,
 } from './constants';
 
 export default async (
@@ -33,9 +33,9 @@ export default async (
     res.redirect('/');
   } else {
     res.render(
-      updateViewFile,
+      profileViewFile,
       {
-        ...updateViewProps,
+        ...profileViewProps,
         data: {
           ...client,
           birth_date: datetimeToDatetimeString(client.birth_date),

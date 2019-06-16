@@ -66,6 +66,62 @@ body {
 }
 
 /*
+* HOME
+*/
+.home-header {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.home-logo {
+  width: 350px;
+}
+.home-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  background-color: #06f;
+  margin: 10px 0;
+}
+.home-nav .label {
+  color: #fff;
+  font-weight: 600;
+}
+.home-nav a {
+  color: #fff;
+}
+.home-nav a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.home-residence {
+  border-bottom: 2px dashed #06f;
+  margin-bottom: 5px;
+  padding: 20px 0;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/*
+* LOGIN
+*/
+.login-form {
+  width: 500px;
+  margin: 10px auto 0;
+  padding: 20px 20px;
+}
+.login-form h3 {
+  text-align: center;
+}
+
+/*
 * ADMIN DASHBOARD
 */
 .wrapper {

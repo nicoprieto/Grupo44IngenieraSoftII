@@ -1,0 +1,89 @@
+
+extends ../_layout.pug
+
+block container
+
+  h3= title
+
+  ul.list-group
+    li.list-group-item
+      span.badge.badge-light Nombre
+      span &nbsp;
+      label= data.name
+
+    li.list-group-item
+      span.badge.badge-light Apellido
+      span &nbsp;
+      label= data.surname
+
+    li.list-group-item
+      span.badge.badge-light Fecha de nacimiento
+      span &nbsp;
+      label= data.birth_date
+  
+    li.list-group-item
+      span.badge.badge-light Email
+      span &nbsp;
+      label= data.email
+
+    li.list-group-item
+      span.badge.badge-light Numero de documento
+      span &nbsp;
+      label= data.document_number
+    
+    li.list-group-item
+      span.badge.badge-light Telefono
+      span &nbsp;
+      label= data.phone
+
+    li.list-group-item
+      span.badge.badge-light Direccion
+      span &nbsp;
+      label= data.address
+
+    li.list-group-item.list-group-item-light
+      a(
+        href=`/clients/${data.id}/update`
+        class="btn btn-primary btn-block"
+      ) Editar perfil
+
+  br
+
+  ul.list-group
+    li.list-group-item.list-group-item-light
+      a(
+        href=`/clients/${data.id}/update`
+        class="btn btn-primary btn-block"
+      ) Cambiar contraseña
+
+  br
+
+  div.alert.alert-info
+    h6 Tarjeta de credito
+
+    ul.list-group
+      li.list-group-item
+        span.badge.badge-light Numero
+        span &nbsp;
+        label= data.credit_card_number
+
+      li.list-group-item
+        span.badge.badge-light Fecha de expiracion (dd/yy)
+        span &nbsp;
+        label= data.credit_card_expiration
+
+      li.list-group-item
+        span.badge.badge-light Nombre del titular (tal cual esta escrito en la tarjeta)
+        span &nbsp;
+        label= data.credit_card_owner
+
+      li.list-group-item
+        span.badge.badge-light Codigo de seguridad
+        span &nbsp;
+        label= data.credit_card_security_code
+
+      li.list-group-item.list-group-item-light
+        a(
+          href=`/clients/${data.id}/credit-card/update`
+          class="btn btn-primary btn-block"
+        ) Editar tarjeta

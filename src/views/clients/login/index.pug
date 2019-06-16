@@ -1,13 +1,12 @@
 extends ../_layout.pug
 
 block container
-
   if errors
     ul.my-errors
       for error in errors
         li= error.msg
 
-  h1 Iniciar sesion
+  h3 Iniciar sesion
 
   form(
     action="/clients/login"
