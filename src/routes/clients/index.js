@@ -213,8 +213,19 @@ export default (helpers: THelpers, models: TModels) => {
     (req: $Request, res: $Response) => getProfile(req, res, helpers, models)
   );
 
+  router.get(
+    '/:id/update',
+    helpers.guard.requireAny('client/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      if(err.isGuard) {
+        res.redirect('/');
+      }
+    },
+    (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
+  );
+
   router.post(
-    '/:id',
+    '/:id/update',
     helpers.guard.requireAny('client/*'),
     (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
       if(err.isGuard) {
@@ -225,6 +236,8 @@ export default (helpers: THelpers, models: TModels) => {
     [
       validations.name,
       validations.surname,
+      validations.birth_dateEmpty,
+      validations.birth_dateIsAdult,
       validations.emailEmpty,
       validations.emailInvalid,
       validations.document_numberEmpty,

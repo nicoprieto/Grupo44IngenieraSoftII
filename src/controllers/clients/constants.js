@@ -16,7 +16,7 @@ type TDetailsProps = {
   message?: string,
 }; 
 
-export const registerViewFile = 'clients/details/index';
+export const registerViewFile = 'clients/register/index';
 export const registerViewProps: TDetailsProps = {
   title: 'Cliente - Registrarse',
   data: emptyClient,
@@ -28,7 +28,7 @@ export const profileViewProps: TDetailsProps = {
   data: emptyClient,
 };
 
-export const updateViewFile = 'clients/details/index';
+export const updateViewFile = 'clients/update/index';
 export const updateViewProps: TDetailsProps = {
   title: 'Cliente - Editar Perfil',
   data: emptyClient,

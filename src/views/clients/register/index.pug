@@ -2,7 +2,6 @@ extends ../_layout.pug
 
 block stylesheets
   link(rel='stylesheet', href='/css/jquery-ui.min.css')
-  // this is a custom datetimepicker
 
 block scripts
   script(src='/js/jquery-ui.min.js')
@@ -38,7 +37,7 @@ block container
     div.alert.alert-success= message
 
   form(
-    action=data.id === null ? "/clients/register" : `/clients/${data.id}`
+    action="/clients/register"
     method="POST"
   )
 
@@ -118,26 +117,25 @@ block container
         placeholder="Ingrese su direccion"
       )= data.address
 
-    if data.id === null
-      div.form-group
-        label(for="pass") Contrasena (min 6 caracteres):
-        input(
-          type="password"
-          id="pass"
-          name="pass"
-          class="form-control"
-          placeholder="Ingrese una contrasena"
-        )
+    div.form-group
+      label(for="pass") Contrasena (min 6 caracteres):
+      input(
+        type="password"
+        id="pass"
+        name="pass"
+        class="form-control"
+        placeholder="Ingrese una contrasena"
+      )
 
-      div.form-group
-        label(for="repass") Re ingrese contrasena:
-        input(
-          type="password"
-          id="repass"
-          name="repass"
-          class="form-control"
-          placeholder="Re ingrese una contrasena"
-        )
+    div.form-group
+      label(for="repass") Re ingrese contrasena:
+      input(
+        type="password"
+        id="repass"
+        name="repass"
+        class="form-control"
+        placeholder="Re ingrese una contrasena"
+      )
 
     div.alert.alert-info
       h6 Tarjeta de credito
@@ -191,6 +189,6 @@ block container
     div.form-group
       input(
         type="submit"
-        value=(data.id === null ? "Registrarse" : "Guardar cambios")
+        value="Registrarse"
         class="btn btn-lg btn-primary btn-block"
       )
