@@ -34,6 +34,12 @@ export const updateViewProps: TDetailsProps = {
   data: emptyClient,
 };
 
+export const changePassViewFile = 'clients/change.pass/index';
+export const changePassViewProps: TDetailsProps = {
+  title: 'Cliente - Cambiar contraseña',
+  data: emptyClient,
+};
+
 // *********************
 //
 // *********************

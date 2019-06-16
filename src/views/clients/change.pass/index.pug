@@ -1,0 +1,57 @@
+extends ../_layout.pug
+
+block container
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  h3= title
+
+  if typeof message !== 'undefined'
+    div.alert.alert-success= message
+
+  form(
+    action=`/clients/${data.id}/change-pass`
+    method="POST"
+  )
+
+    div.form-group
+      label(for="curPass") Contraseña actual:
+      input(
+        type="password"
+        id="curPass"
+        name="curPass"
+        class="form-control"
+        placeholder="Ingrese su contraseña actual"
+      )
+
+    div.form-group
+      label(for="pass") Nueva contraseña (min 6 caracteres):
+      input(
+        type="password"
+        id="pass"
+        name="pass"
+        class="form-control"
+        placeholder="Ingrese nueva contraseña"
+      )
+
+    div.form-group
+      label(for="repass") Re ingrese nueva contraseña:
+      input(
+        type="password"
+        id="repass"
+        name="repass"
+        class="form-control"
+        placeholder="Re ingrese nueva contraseña"
+      )
+
+    br
+
+    div.form-group
+      input(
+        type="submit"
+        value="Cambiar contraseña"
+        class="btn btn-lg btn-primary btn-block"
+      )

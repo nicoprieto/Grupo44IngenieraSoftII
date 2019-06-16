@@ -19,6 +19,8 @@ import {
   getProfile,
   getUpdate,
   postUpdate,
+  getChangePass,
+  postChangePass,
 } from '../../controllers/clients';
 
 // ----------------------
@@ -81,6 +83,11 @@ export default (helpers: THelpers, models: TModels) => {
         .check('address')
         .exists({ checkFalsy: true })
         .withMessage('Por favor ingrese una direccion'),
+    curPass: helpers
+      .validator
+        .check('curPass')
+        .isLength({ min: 6 })
+        .withMessage('Contrasena actual es invalida'),       
     pass: helpers
       .validator
         .check('pass')
@@ -247,6 +254,35 @@ export default (helpers: THelpers, models: TModels) => {
     ],
     (req: $Request, res: $Response) => postUpdate(req, res, helpers, models)
   );
+
+  router.get(
+    '/:id/change-pass',
+    helpers.guard.requireAny('client/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      if(err.isGuard) {
+        res.redirect('/');
+      }
+    },
+    (req: $Request, res: $Response) => getChangePass(req, res, helpers, models)
+  );
+
+  router.post(
+    '/:id/change-pass',
+    helpers.guard.requireAny('client/*'),
+    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+      if(err.isGuard) {
+        res.redirect('/');
+      }
+    },
+    // $FlowFixMe
+    [
+      validations.curPass,
+      validations.pass,
+      validations.respass,
+    ],
+    (req: $Request, res: $Response) => postChangePass(req, res, helpers, models)
+  );
+
 
   return router;
 };
