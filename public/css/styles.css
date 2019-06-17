@@ -99,7 +99,7 @@ body {
   text-decoration: underline;
 }
 .home-residence {
-  border-bottom: 2px dashed #06f;
+  border-bottom: 2px solid #06f;
   margin-bottom: 5px;
   padding: 20px 0;
   display: flex;
@@ -107,6 +107,10 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.home-residence img {
+  width: 300px;
+  margin: 0 5px;
 }
 
 /*
