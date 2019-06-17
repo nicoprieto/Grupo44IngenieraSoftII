@@ -19,7 +19,7 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, helpers: { password, datetimeToDatetimeString } }: TModels
+  { Clients, helpers: { password } }: TModels
 ) => {
   const errors = helpers.validator.validationResult(req);
   const { id } = req.params;
@@ -37,10 +37,7 @@ export default async (
           changePassViewFile,
           {
             ...changePassViewProps,
-            data: {
-              ...client,
-              birth_date: datetimeToDatetimeString(client.birth_date),
-            },
+            data: Clients.formatClient(client),
             errors: [
               {
                 "location": "body",
@@ -63,10 +60,7 @@ export default async (
         changePassViewFile,
         {
           ...changePassViewProps,
-          data: {
-            ...client,
-            birth_date: datetimeToDatetimeString(client.birth_date),
-          },
+          data: Clients.formatClient(client),
           message: 'Contraseña actualizada correctamente!',
         }
       );

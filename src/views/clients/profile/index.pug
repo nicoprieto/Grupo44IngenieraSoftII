@@ -63,17 +63,22 @@ block container
 
     ul.list-group
       li.list-group-item
+        span.badge.badge-light Marca
+        span &nbsp;
+        label= data.credit_card_brand
+
+      li.list-group-item
         span.badge.badge-light Numero
         span &nbsp;
         label= data.credit_card_number
 
       li.list-group-item
-        span.badge.badge-light Fecha de expiracion (dd/yy)
+        span.badge.badge-light Fecha de expiracion
         span &nbsp;
         label= data.credit_card_expiration
 
       li.list-group-item
-        span.badge.badge-light Nombre del titular (tal cual esta escrito en la tarjeta)
+        span.badge.badge-light Nombre del titular
         span &nbsp;
         label= data.credit_card_owner
 

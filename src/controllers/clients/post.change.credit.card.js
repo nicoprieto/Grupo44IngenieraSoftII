@@ -17,7 +17,7 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, helpers: { datetimeToDatetimeString } }: TModels
+  { Clients }: TModels
 ) => {
   const errors = helpers.validator.validationResult(req);
   const { id } = req.params;
@@ -44,10 +44,7 @@ export default async (
         changeCreditCardViewFile,
         {
           ...changeCreditCardViewProps,
-          data: {
-            ...updatedClient,
-            birth_date: datetimeToDatetimeString(updatedClient.birth_date),
-          },
+          data: Clients.formatClient(updatedClient),
           message: 'Datos actualizados correctamente!',
         }
       );
@@ -65,8 +62,7 @@ export default async (
             }
           ],
           data: {
-            ...client,
-            birth_date: datetimeToDatetimeString(client.birth_date),
+            ...Clients.formatClient(client),
             ...req.body,
           },
         }
@@ -79,8 +75,7 @@ export default async (
         ...changeCreditCardViewProps,
         errors: errors.array(),
         data: {
-          ...client,
-          birth_date: datetimeToDatetimeString(client.birth_date),
+          ...Clients.formatClient(client),
           ...req.body,
         }
       }

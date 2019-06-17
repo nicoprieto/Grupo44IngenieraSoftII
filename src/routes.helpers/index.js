@@ -16,12 +16,15 @@ import HttpStatusCodes from './http.status.codes';
 
 import isBirthDateAdultAge from './is.birth.date.adult.age';
 
+import isCreditCardExpirationValid from './is.credit.card.expiration.valid';
+
 export type THelpers = {
   guard: TGuard,
   validator: TValidator,
   fileUpload: TFileUpload,
   HttpStatusCodes: typeof HttpStatusCodes,
   isBirthDateAdultAge: typeof isBirthDateAdultAge,
+  isCreditCardExpirationValid: typeof isCreditCardExpirationValid,
 };
 
 export default {
@@ -31,4 +34,5 @@ export default {
   fileUpload,
   HttpStatusCodes,
   isBirthDateAdultAge,
+  isCreditCardExpirationValid,
 };

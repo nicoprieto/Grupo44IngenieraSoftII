@@ -17,18 +17,14 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, helpers: { datetimeToDatetimeString } }: TModels
+  { Clients }: TModels
 ) => {
-  const { id } = req.params;
   const { client } = res.locals;
   res.render(
     changeCreditCardViewFile,
     {
       ...changeCreditCardViewProps,
-      data: {
-        ...client,
-        birth_date: datetimeToDatetimeString(client.birth_date),
-      },
+      data: Clients.formatClient(client),
     },
   );
 };

@@ -96,23 +96,28 @@ export default (helpers: THelpers, models: TModels) => {
         .isLength({ min: 6 })
         .withMessage('Por favor ingrese una contrasena valida'),
     respass: helpers
-    .validator
+      .validator
       .check('repass')
       .custom((value, { req }) => value === req.body.pass)
       .withMessage('Las contrasena no son coindicentes'),
+    credit_card_brand: helpers
+      .validator
+      .check('credit_card_brand')
+      .exists({ checkFalsy: true })
+      .withMessage('Ingrese tarjeta de credito marca, por favor'),
     credit_card_number: helpers
       .validator
         .check('credit_card_number')
         // check for the good case
-        .custom((value) => !isNaN(value))
+        .custom((value) => /^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/.test(value))
         .withMessage('Numero de tarjeta de credito es incorrecto'),
     credit_card_expiration: helpers
       .validator
-        .check('credit_card_expiration')
-        // check for the good case
-        .custom((value) => /^\d{2}\/\d{2}$/.test(value))
-        .withMessage('Fecha de expiracion es incorrecto'),
-        credit_card_owner: helpers
+      .check('credit_card_expiration')
+      // check for the good case
+      .custom((value) => helpers.isCreditCardExpirationValid(value))
+      .withMessage('Fecha de expiracion tarjeta es incorrecto'),
+    credit_card_owner: helpers
       .validator
         .check('credit_card_owner')
         .exists({ checkFalsy: true })
@@ -149,9 +154,19 @@ export default (helpers: THelpers, models: TModels) => {
     }
   };
 
+  // BUG I dont know how to use cookie sessions
   const onGuardErrorFunction = (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
     if(err.isGuard) {
-      res.status(helpers.HttpStatusCodes.FORBIDDEN).send();
+      // user has been redirect to same url but still is failing
+      if(req.originalUrl.includes('try-again')) {
+        res.status(helpers.HttpStatusCodes.FORBIDDEN).send();
+      } else {
+        // destroy session
+        req.session.destroy(() => {
+          // and redirect again to the same url
+          res.redirect(`${req.originalUrl}?try-again`);
+        });
+      }
     } else {
       next();
     }
@@ -213,6 +228,7 @@ export default (helpers: THelpers, models: TModels) => {
       validations.address,
       validations.pass,
       validations.respass,
+      validations.credit_card_brand,
       validations.credit_card_number,
       validations.credit_card_expiration,
       validations.credit_card_owner,

@@ -36,6 +36,13 @@ block container
   if typeof message !== 'undefined'
     div.alert.alert-success= message
 
+  div.alert.alert-info.
+    Siendo usuario registrado podra acceder a nuestra plataforma y
+    podra ofertar por nuestras residencias a lo largo del mundo.
+    Al momento de registrarse se le otorgaran 2 creditos.
+
+  div.alert.alert-warning Todos los campos son obligatorios
+
   form(
     action="/clients/register"
     method="POST"
@@ -64,7 +71,7 @@ block container
       )
 
     div.form-group
-      label(for="birth_date") Fecha de nacimiento:
+      label(for="birth_date") Fecha de nacimiento <em>(usted debe tener mas de 18 años)</em>:
       input(
         type="text"
         id="birth_date"
@@ -118,7 +125,7 @@ block container
       )= data.address
 
     div.form-group
-      label(for="pass") Contrasena (min 6 caracteres):
+      label(for="pass") Contrasena <em>(min 6 caracteres)</em>:
       input(
         type="password"
         id="pass"
@@ -141,6 +148,17 @@ block container
       h6 Tarjeta de credito
 
       div.form-group
+        label(for="credit_card_brand") Marca:
+        input(
+          type="text"
+          id="credit_card_brand"
+          name="credit_card_brand"
+          class="form-control"
+          placeholder="Ingrese marca"
+          value=data.credit_card_brand
+        )
+
+      div.form-group
         label(for="credit_card_number") Numero:
         input(
           type="text"
@@ -152,7 +170,7 @@ block container
         )
 
       div.form-group
-        label(for="credit_card_expiration") Fecha de expiracion (dd/yy):
+        label(for="credit_card_expiration") Fecha de expiracion <em>(dd/yy)</em>:
         input(
           type="text"
           id="credit_card_expiration"
@@ -163,7 +181,7 @@ block container
         )
 
       div.form-group
-        label(for="credit_card_owner") Nombre del titular (tal cual esta escrito en la tarjeta):
+        label(for="credit_card_owner") Nombre del titular <em>(tal cual esta escrito en la tarjeta)</em>:
         input(
           type="text"
           id="credit_card_owner"
