@@ -23,16 +23,9 @@ export default async (
 ) => {
   const errors = helpers.validator.validationResult(req);
   const { id } = req.params;
+  const { client } = res.locals;
   if(errors.isEmpty()) {
     try {
-      const client = await Clients.query().findById(id);
-      // can modify client if session is not the same as param
-      if(
-        typeof req.session.clientId === 'undefined' ||
-        req.session.clientId.toString() !== id.toString()
-      ) {
-        return res.redirect('/');
-      }
       const {
         curPass,
         pass,

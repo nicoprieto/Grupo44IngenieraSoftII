@@ -20,27 +20,15 @@ export default async (
   { Clients, helpers: { datetimeToDatetimeString } }: TModels
 ) => {
   const { id } = req.params;
-  // can view details client if session is not the same as param
-  if(
-    typeof req.session.clientId === 'undefined' ||
-    req.session.clientId.toString() !== id.toString()
-  ) {
-    return res.redirect('/');
-  }
-  const client = await Clients.query().findById(id);
-  // extreme rare case
-  if(!(client instanceof Clients)) {
-    res.redirect('/');
-  } else {
-    res.render(
-      changePassViewFile,
-      {
-        ...changePassViewProps,
-        data: {
-          ...client,
-          birth_date: datetimeToDatetimeString(client.birth_date),
-        },
+  const { client } = res.locals;
+  res.render(
+    changePassViewFile,
+    {
+      ...changePassViewProps,
+      data: {
+        ...client,
+        birth_date: datetimeToDatetimeString(client.birth_date),
       },
-    );
-  }   
+    },
+  );
 };

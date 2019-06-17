@@ -10,6 +10,8 @@ import _getUpdate from './get.update';
 import _postUpdate from './post.update';
 import _getChangePass from './get.change.pass';
 import _postChangePass from './post.change.pass';
+import _getChangeCreditCard from './get.change.credit.card';
+import _postChangeCreditCard from './post.change.credit.card';
 
 export const getRegister = _getRegister;
 export const postRegister = _postRegister;
@@ -21,3 +23,5 @@ export const getUpdate = _getUpdate;
 export const postUpdate = _postUpdate;
 export const getChangePass = _getChangePass;
 export const postChangePass = _postChangePass;
+export const getChangeCreditCard = _getChangeCreditCard;
+export const postChangeCreditCard = _postChangeCreditCard;

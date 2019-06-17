@@ -1,0 +1,71 @@
+extends ../_layout.pug
+
+block container
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  h3= title
+
+  if typeof message !== 'undefined'
+    div.alert.alert-success= message
+
+  form(
+    action=`/clients/${data.id}/change-credit-card`
+    method="POST"
+  )
+
+    div.form-group
+      label(for="credit_card_number") Numero:
+      input(
+        type="text"
+        id="credit_card_number"
+        name="credit_card_number"
+        class="form-control"
+        placeholder="Ingrese numero"
+        value=data.credit_card_number
+      )
+
+    div.form-group
+      label(for="credit_card_expiration") Fecha de expiracion (dd/yy):
+      input(
+        type="text"
+        id="credit_card_expiration"
+        name="credit_card_expiration"
+        class="form-control"
+        placeholder="Ingrese fecha de expiracion"
+        value=data.credit_card_expiration
+      )
+
+    div.form-group
+      label(for="credit_card_owner") Nombre del titular (tal cual esta escrito en la tarjeta):
+      input(
+        type="text"
+        id="credit_card_owner"
+        name="credit_card_owner"
+        class="form-control"
+        placeholder="Ingrese nombre del titular"
+        value=data.credit_card_owner
+      )
+
+    div.form-group
+      label(for="credit_card_security_code") Codigo de seguridad:
+      input(
+        type="text"
+        id="credit_card_security_code"
+        name="credit_card_security_code"
+        class="form-control"
+        placeholder="Ingrese codigo de seguridad"
+        value=data.credit_card_security_code
+      )
+
+    br
+
+    div.form-group
+      input(
+        type="submit"
+        value="Guardar cambios"
+        class="btn btn-lg btn-primary btn-block"
+      )

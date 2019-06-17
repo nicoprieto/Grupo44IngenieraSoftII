@@ -40,6 +40,12 @@ export const changePassViewProps: TDetailsProps = {
   data: emptyClient,
 };
 
+export const changeCreditCardViewFile = 'clients/change.credit.card/index';
+export const changeCreditCardViewProps: TDetailsProps = {
+  title: 'Cliente - Editar tarjeta de credito',
+  data: emptyClient,
+};
+
 // *********************
 //
 // *********************

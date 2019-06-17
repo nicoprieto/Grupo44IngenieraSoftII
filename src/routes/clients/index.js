@@ -21,6 +21,8 @@ import {
   postUpdate,
   getChangePass,
   postChangePass,
+  getChangeCreditCard,
+  postChangeCreditCard,
 } from '../../controllers/clients';
 
 // ----------------------
@@ -108,7 +110,7 @@ export default (helpers: THelpers, models: TModels) => {
       .validator
         .check('credit_card_expiration')
         // check for the good case
-        .custom((value) => /\d{2}\/\d{2}/.test(value))
+        .custom((value) => /^\d{2}\/\d{2}$/.test(value))
         .withMessage('Fecha de expiracion es incorrecto'),
         credit_card_owner: helpers
       .validator
@@ -118,29 +120,58 @@ export default (helpers: THelpers, models: TModels) => {
     credit_card_security_code: helpers
       .validator
       .check('credit_card_security_code')
-      .custom((value) => /\d{3}/.test(value))
+      .custom((value) => /^\d{3}$/.test(value))
       .withMessage('Codigo de seguridad es invalido'),
   };
+
+  const validateSessionClientIdWithParamId = (req: $Request, res: $Response, next: NextFunction) => {
+    const { id } = req.params;
+    if(
+      typeof req.session.clientId === 'undefined' ||
+      req.session.clientId.toString() !== id.toString()
+    ) {
+      res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
+    } else {
+      next();
+    }
+  };
+
+  const getClientUsingParamId = async (req: $Request, res: $Response, next: NextFunction) => {
+    const { id } = req.params;
+    const client = await models.Clients.query().findById(id);
+    // extreme rare case
+    if(!(client instanceof models.Clients)) {
+      res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
+    } else {
+      // put client in res.locals
+      res.locals.client = client;
+      next();
+    }
+  };
+
+  const onGuardErrorFunction = (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+    if(err.isGuard) {
+      res.status(helpers.HttpStatusCodes.FORBIDDEN).send();
+    } else {
+      next();
+    }
+  };
+
+  // -----------------
+  // Routes start here
+  // -----------------
 
   router.get(
     '/login',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getLogin(req, res, helpers, models)
   );
 
   router.post(
     '/login',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     // $FlowFixMe
     [
       helpers
@@ -160,22 +191,14 @@ export default (helpers: THelpers, models: TModels) => {
   router.get(
     '/register',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getRegister(req, res, helpers, models)
   );
 
   router.post(
     '/register',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     // $FlowFixMe
     [
       validations.name,
@@ -201,44 +224,34 @@ export default (helpers: THelpers, models: TModels) => {
   router.get(
     '/logout',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getLogout(req, res, helpers, models)
   );
 
   router.get(
     '/:id',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
     (req: $Request, res: $Response) => getProfile(req, res, helpers, models)
   );
 
   router.get(
     '/:id/update',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
     (req: $Request, res: $Response) => getUpdate(req, res, helpers, models)
   );
 
   router.post(
     '/:id/update',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
     // $FlowFixMe
     [
       validations.name,
@@ -258,22 +271,18 @@ export default (helpers: THelpers, models: TModels) => {
   router.get(
     '/:id/change-pass',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
     (req: $Request, res: $Response) => getChangePass(req, res, helpers, models)
   );
 
   router.post(
     '/:id/change-pass',
     helpers.guard.requireAny('client/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
     // $FlowFixMe
     [
       validations.curPass,
@@ -283,6 +292,30 @@ export default (helpers: THelpers, models: TModels) => {
     (req: $Request, res: $Response) => postChangePass(req, res, helpers, models)
   );
 
+  router.get(
+    '/:id/change-credit-card',
+    helpers.guard.requireAny('client/*'),
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
+    (req: $Request, res: $Response) => getChangeCreditCard(req, res, helpers, models)
+  );
+
+  router.post(
+    '/:id/change-credit-card',
+    helpers.guard.requireAny('client/*'),
+    onGuardErrorFunction,
+    validateSessionClientIdWithParamId,
+    getClientUsingParamId,
+    // $FlowFixMe
+    [
+      validations.credit_card_number,
+      validations.credit_card_expiration,
+      validations.credit_card_owner,
+      validations.credit_card_security_code,
+    ],
+    (req: $Request, res: $Response) => postChangeCreditCard(req, res, helpers, models)
+  );
 
   return router;
 };

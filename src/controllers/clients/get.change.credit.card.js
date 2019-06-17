@@ -9,8 +9,8 @@ import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
 import {
-  profileViewFile,
-  profileViewProps,
+  changeCreditCardViewFile,
+  changeCreditCardViewProps,
 } from './constants';
 
 export default async (
@@ -22,13 +22,13 @@ export default async (
   const { id } = req.params;
   const { client } = res.locals;
   res.render(
-    profileViewFile,
+    changeCreditCardViewFile,
     {
-      ...profileViewProps,
+      ...changeCreditCardViewProps,
       data: {
         ...client,
         birth_date: datetimeToDatetimeString(client.birth_date),
       },
     },
-  ); 
+  );
 };

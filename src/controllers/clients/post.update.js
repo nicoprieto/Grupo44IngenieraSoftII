@@ -23,20 +23,9 @@ export default async (
 ) => {
   const errors = helpers.validator.validationResult(req);
   const { id } = req.params;
+  const { client } = res.locals;
   if(errors.isEmpty()) {
     try {
-      // can modify client if session is not the same as param
-      if(
-        typeof req.session.clientId === 'undefined' ||
-        req.session.clientId.toString() !== id.toString()
-      ) {
-        return res.redirect('/');
-      }
-      // extreme rare case
-      const client = await Clients.query().findById(id);
-      if(!(client instanceof Clients)) {
-        return res.redirect('/');
-      }
       const clientData = Clients.getFromReqBody(req);
       // check if email is not used
       if((await Clients
@@ -89,7 +78,24 @@ export default async (
     // database error
     } catch(e) {
       console.error(e);
-      res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
+      res.render(
+        updateViewFile,
+        {
+          ...updateViewProps,
+          errors: [
+            {
+              "location": "body",
+              "msg": "Fallo cambio de contrasena, intente de vuelta",
+              "param": ""
+            }
+          ],
+          data: {
+            // id is not in req.body, is it req.params
+            id,
+            ...req.body,
+          }
+        }
+      );      
     }
   // post data submitted is invalid
   } else {
