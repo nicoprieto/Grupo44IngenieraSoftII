@@ -24,7 +24,7 @@ export default class ResidencesPhotos extends objection.Model {
       id: null,
       residences_id: residenceId,
       filename,
-      created_at: objection.Residences.helpers.now(),
+      created_at: ResidencesPhotos.helpers.now(),
       updated_at: '',
       isRemoved: false,
     }));
