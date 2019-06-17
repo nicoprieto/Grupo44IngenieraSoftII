@@ -4,6 +4,8 @@ import objection from 'objection';
 
 import { type THelpers } from '../models.helpers';
 
+import { type TResidencePhotos } from './ResidencesPhotos';
+
 export type TResidence = {
   id: number | null,
   title: string,
@@ -25,17 +27,6 @@ export type TResidence = {
 };
 
 export type TResidences = Array<TResidence>;
-
-export type TResidencePhoto = {
-  id: number | null,
-  residences_id: number,
-  filename: string,
-  created_at: string,
-  updated_at: string,
-  isRemoved: bool,
-};
-
-export type TResidencePhotos = Array<TResidencePhoto>;
 
 export const emptyResidence: TResidence = {
   id: null,
@@ -75,100 +66,67 @@ export const emptyResidence: TResidence = {
 };
 */
 
-export default (
-  Model: objection.Model,
-  helpers: THelpers
-) => {
+export default class Residences extends objection.Model {
 
-  class ResidencesPhotos extends Model {
+  helpers: THelpers;
 
-    static getFromReqBody({ body }: any, residenceId: number): TResidencePhotos {
-      return body.photos.map(({ filename }): TResidencePhoto => ({
-        id: null,
-        residences_id: residenceId,
-        filename,
-        created_at: helpers.now(),
-        updated_at: '',
-        isRemoved: false,
-      }));
-    }
-
-    static get tableName() {
-      return 'residences_photos';
-    }
-
-    static get relationMappings () {
-      return {
-        residence: {
-          relation: Model.BelongsToOneRelation,
-          modelClass: Residences,
-          join: {
-            from: 'residences_photos.residences_id',
-            to: 'residences.id'
-          }
-        }
-      }
-    }
-
+  static getFromReqBody({ body }: any): TResidence {
+    const {
+      title,
+      description,
+      address_street,
+      address_number,
+      address_postal_code,
+      address_city,
+      address_state,
+      address_nation,
+      address_apartament,
+      address_flat,
+      isEnabled,
+      price,
+    } = body;
+    return {
+      id: null,
+      title,
+      description,
+      address_street,
+      address_number,
+      address_postal_code,
+      address_city,
+      address_state,
+      address_nation,
+      address_apartament,
+      address_flat,
+      isEnabled: isEnabled === 'on',
+      created_at: Residences.helpers.now(),
+      updated_at: '',
+      isRemoved: false,
+    };
   }
 
-  class Residences extends Model {
+  static get tableName() {
+    return 'residences';
+  }
 
-    static getFromReqBody({ body }: any): TResidence {
-      const {
-        title,
-        description,
-        address_street,
-        address_number,
-        address_postal_code,
-        address_city,
-        address_state,
-        address_nation,
-        address_apartament,
-        address_flat,
-        isEnabled,
-        price,
-      } = body;
-      return {
-        id: null,
-        title,
-        description,
-        address_street,
-        address_number,
-        address_postal_code,
-        address_city,
-        address_state,
-        address_nation,
-        address_apartament,
-        address_flat,
-        isEnabled: isEnabled === 'on',
-        created_at: helpers.now(),
-        updated_at: '',
-        isRemoved: false,
-      };
-    }
-
-    static get tableName() {
-      return 'residences';
-    }
-
-    static get relationMappings () {
-      return {
-        photos: {
-          relation: Model.HasManyRelation,
-          modelClass: ResidencesPhotos,
-          join: {
-            from: 'residences.id',
-            to: 'residences_photos.residences_id'
-          }
+  static get relationMappings () {
+    return {
+      photos: {
+        relation: objection.Model.HasManyRelation,
+        modelClass: __dirname + '/ResidencesPhotos',
+        join: {
+          from: 'residences.id',
+          to: 'residences_photos.residences_id'
         }
-      }
+      },
+      weeks: {
+        relation: objection.Model.HasManyRelation,
+        modelClass: __dirname + '/Weeks',
+        join: {
+          from: 'residences.weeks_id',
+          to: 'weeks.id'
+        }
+      },
     }
+  }
 
-  };
-
-  return {
-    ResidencesPhotos,
-    Residences,
-  };
 };

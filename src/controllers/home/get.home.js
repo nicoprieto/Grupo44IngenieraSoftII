@@ -21,29 +21,31 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, Weeks }: TModels
+  { Clients, Weeks, Residences }: TModels
 ) => {
-  let { client } = homeViewProps;
+  let { client } = res.locals;
+  // if a client show the avaiable residences for being reserved
+  let residences = [];
   try {
-    const weeks = await Weeks
-      .query()
-      .eager('[residence, residence.photos]')
-      .where('weeks.isEnabled', true)
-      .andWhere('weeks.isRemoved', false)
-    ;
-    if(req.session.isClient) {
-      client = await Clients.query().findById(req.session.clientId);
-      // rare case, cooke has been hacked
-      if(!(client instanceof Clients)) {
-        client = emptyClient;
-      }
+    // user is logged
+    if(client.id !== null) {
+      residences = await Residences
+        .query()
+        .joinRelation('weeks')
+      ;
+    // show five residences
+    } else {
+      residences = await Residences
+        .query()
+        .eager('photos')
+        // dont care if they are enable or removed
     }
     res.render(
       homeViewFile,
       {
         ...homeViewProps,
         client,
-        weeks,
+        residences,
       }
     );
   // database error

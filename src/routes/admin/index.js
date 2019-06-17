@@ -8,7 +8,7 @@ import express, {
 
 import { type THelpers } from '../../routes.helpers';
 import { type TGuardError } from '../../routes.helpers/guard';
-import { type TModels } from '../../models';
+import { type TModelsWithHelpers } from '../../models';
 
 import {
   getLogin,
@@ -21,7 +21,7 @@ import {
 // export default
 // ----------------------
 
-export default (helpers: THelpers, models: TModels) => {
+export default (helpers: THelpers, models: TModelsWithHelpers) => {
   const router = express.Router();
 
   router.get(

@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 
 import { type THelpers } from '../../routes.helpers';
-import { type TModels } from '../../models';
+import { type TModelsWithHelpers } from '../../models';
 
 import {
   reservationUpdateViewFile,
@@ -17,7 +17,7 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Reservations, Residences, helpers: { datetimeToDatetimeString } }: TModels
+  { Reservations, Residences, helpers: { datetimeToDatetimeString } }: TModelsWithHelpers
 ) => {
   const id = req.params.id;
   const reservation = await Reservations.query().findById(id);

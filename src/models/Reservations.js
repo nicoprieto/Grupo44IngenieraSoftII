@@ -48,91 +48,85 @@ export const emptyReservation: TReservation = {
   isRemoved: false,
 };
 
-export default (
-  Model: objection.Model,
-  helpers: THelpers,
-  modelClasses: { Residences: any }
-) => {
+export default class Reservations extends objection.Model {
 
-  return class Reservations extends Model {
+  helpers: THelpers;
 
-    static getFromReqBody({ body }: any): TReservation {
-      const {
-        residences_id,
-        title,
-        description,
-        premium_date_start,
-        premium_date_end,
-        bidding_date_start,
-        bidding_date_end,
-        hotsale_date_start,
-        hotsale_date_end,
-        purchase_method,
-        isEnabled,
-      } = body;
-      return {
-        id: null,
-        residences_id,
-        // these fields are optional
-        title: title || '',
-        description: description || '',
-        premium_date_start: helpers.localedateToDatetimeString(premium_date_start),
-        premium_date_end: helpers.localedateToDatetimeString(premium_date_end),
-        bidding_date_start: helpers.localedateToDatetimeString(bidding_date_start),
-        bidding_date_end: helpers.localedateToDatetimeString(bidding_date_end),
-        // these fields are optional
-        hotsale_date_start: helpers.localedateToDatetimeString(hotsale_date_start) || '',
-        hotsale_date_end: helpers.localedateToDatetimeString(hotsale_date_end) || '',
-        purchase_method: null,
-        isEnabled: isEnabled === 'on',
-        created_at: helpers.now(),
-        updated_at: '',
-        isRemoved: false,
-      };
-    }
+  static getFromReqBody({ body }: any): TReservation {
+    const {
+      residences_id,
+      title,
+      description,
+      premium_date_start,
+      premium_date_end,
+      bidding_date_start,
+      bidding_date_end,
+      hotsale_date_start,
+      hotsale_date_end,
+      purchase_method,
+      isEnabled,
+    } = body;
+    return {
+      id: null,
+      residences_id,
+      // these fields are optional
+      title: title || '',
+      description: description || '',
+      premium_date_start: Reservations.helpers.localedateToDatetimeString(premium_date_start),
+      premium_date_end: Reservations.helpers.localedateToDatetimeString(premium_date_end),
+      bidding_date_start: Reservations.helpers.localedateToDatetimeString(bidding_date_start),
+      bidding_date_end: Reservations.helpers.localedateToDatetimeString(bidding_date_end),
+      // these fields are optional
+      hotsale_date_start: Reservations.helpers.localedateToDatetimeString(hotsale_date_start) || '',
+      hotsale_date_end: Reservations.helpers.localedateToDatetimeString(hotsale_date_end) || '',
+      purchase_method: null,
+      isEnabled: isEnabled === 'on',
+      created_at: Reservations.helpers.now(),
+      updated_at: '',
+      isRemoved: false,
+    };
+  }
 
-    static generateEmptyReservation(): TReservation {
-      const format = 'DD/MM/YYYY';
-      const premium_date_start = helpers.moment();
-      const premium_date_end = helpers.moment(premium_date_start).add('6', 'months');
-      const bidding_date_start = helpers.moment(premium_date_end).add('1', 'day');
-      const bidding_date_end = helpers.moment(bidding_date_start).add('2', 'days');
-      return {
-        id: null,
-        residences_id: 0,
-        title: '',
-        description: '',
-        premium_date_start: premium_date_start.format(format),
-        premium_date_end: premium_date_end.format(format),
-        bidding_date_start: bidding_date_start.format(format),
-        bidding_date_end: bidding_date_end.format(format),
-        hotsale_date_start: '',
-        hotsale_date_end: '',
-        purchase_method: null,
-        isEnabled: true,
-        created_at: helpers.now(),
-        updated_at: '',
-        isRemoved: false,
-      };
-    }
+  static generateEmptyReservation(): TReservation {
+    const format = 'DD/MM/YYYY';
+    const premium_date_start = Reservations.helpers.moment();
+    const premium_date_end = Reservations.helpers.moment(premium_date_start).add('6', 'months');
+    const bidding_date_start = Reservations.helpers.moment(premium_date_end).add('1', 'day');
+    const bidding_date_end = Reservations.helpers.moment(bidding_date_start).add('2', 'days');
+    return {
+      id: null,
+      residences_id: 0,
+      title: '',
+      description: '',
+      premium_date_start: premium_date_start.format(format),
+      premium_date_end: premium_date_end.format(format),
+      bidding_date_start: bidding_date_start.format(format),
+      bidding_date_end: bidding_date_end.format(format),
+      hotsale_date_start: '',
+      hotsale_date_end: '',
+      purchase_method: null,
+      isEnabled: true,
+      created_at: Reservations.helpers.now(),
+      updated_at: '',
+      isRemoved: false,
+    };
+  }
 
-    static get tableName() {
-      return 'reservations';
-    }
+  static get tableName() {
+    return 'reservations';
+  }
 
-    static get relationMappings () {
-      return {
-        residence: {
-          relation: Model.BelongsToOneRelation,
-          modelClass: modelClasses.Residences,
-          join: {
-            from: 'reservations.residences_id',
-            to: 'residences.id'
-          }
+  static get relationMappings () {
+    return {
+      residence: {
+        relation: objection.Model.BelongsToOneRelation,
+        modelClass: __dirname + '/Residences',
+        join: {
+          from: 'reservations.residences_id',
+          to: 'residences.id'
         }
       }
     }
-
-  };
+  }
 
 };

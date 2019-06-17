@@ -8,7 +8,8 @@ import express, {
 import { type THelpers } from '../../routes.helpers';
 import { type TModels } from '../../models';
 
-import { type TResidence, type TResidencePhoto } from '../../models/Residences';
+import { type TResidence } from '../../models/Residences';
+import { type TResidencePhoto } from '../../models/ResidencesPhotos';
 
 import {
   residenceCreateViewFile,

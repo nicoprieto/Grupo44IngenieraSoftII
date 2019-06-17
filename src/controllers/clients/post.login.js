@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 
 import { type THelpers } from '../../routes.helpers';
-import { type TModels } from '../../models';
+import { type TModelsWithHelpers } from '../../models';
 
 import {
   loginViewFile,
@@ -17,7 +17,7 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, helpers: { password } }: TModels
+  { Clients, helpers: { password } }: TModelsWithHelpers
 ) => {
   const errors = helpers.validator.validationResult(req);
   if(errors.isEmpty()) {

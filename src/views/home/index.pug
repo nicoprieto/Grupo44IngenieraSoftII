@@ -1,19 +1,25 @@
 extends ./_layout.pug
 
 block container
-  for week in weeks
-    div.home-residence
-      h3= `Residencia ${week.residence.title}`
-      p= week.residence.description
-      div
-        for photo in week.residence.photos
-          img(
-            src=`/residences/${photo.filename}`
-            alt=`Foto residencia ${photo.id}`
-          )
-      br
+  if residences.length === 0 && client.id === null
+    div.alert.alert-info No hay residencias cargadas en el sistema
 
-      a(
-        title="Ver mas informacion.."
-        href=`/residences/${week.residence.id}`
-      ) Ver mas informacion...
+  else if residences.length === 0 && client.id !== null
+    div.alert.alert-info No hay residencias disponibles para ser reservadas
+
+  else 
+    for residence in residences
+      div.home-residence
+        h3= `Residencia ${residence.title}`
+        div
+          for photo in residence.photos
+            img(
+              src=`/residences/${photo.filename}`
+              alt=`Foto residencia ${photo.id}`
+            )
+        br
+
+        a(
+          title="Ver mas informacion →"
+          href=`/residences/${residence.id}`
+        ) Ver mas informacion →

@@ -5,11 +5,12 @@ import Knex from 'knex';
 
 import helpers, { type THelpers } from '../models.helpers';
 
-import users from './Users';
-import residences from './Residences';
-import reservations from './Reservations';
-import clients from './Clients';
-import weeks from './Weeks';
+import Users from './Users';
+import Residences from './Residences';
+import ResidencesPhotos from './ResidencesPhotos';
+import Reservations from './Reservations';
+import Clients from './Clients';
+import Weeks from './Weeks';
 
 export type TModels = {
   Users: Model,
@@ -18,11 +19,14 @@ export type TModels = {
   Reservations: Model,
   Clients: Model,
   Weeks: Model,
+};
+
+export type TModelsWithHelpers = TModels & {
   knex: any,
   helpers: THelpers,
 };
 
-export default (databasePath: string): TModels | null => {
+export default (databasePath: string): TModelsWithHelpers | null => {
   try {
     // Initialize knex.
     const knex = Knex({
@@ -38,11 +42,12 @@ export default (databasePath: string): TModels | null => {
     Model.knex(knex);
 
     // initialize models and return them
-    const Users = users(Model);
-    const { Residences, ResidencesPhotos } = residences(Model, helpers);
-    const Reservations = reservations(Model, helpers, { Residences });
-    const Clients = clients(Model, helpers);
-    const Weeks = weeks(Model, helpers, { Residences });
+    Users.helpers = helpers;
+    Residences.helpers = helpers;
+    ResidencesPhotos.helpers = helpers;
+    Reservations.helpers = helpers;
+    Clients.helpers = helpers;
+    Weeks.helpers = helpers;
 
     return {
       Users,

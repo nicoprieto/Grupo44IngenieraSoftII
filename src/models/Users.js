@@ -2,14 +2,14 @@
 
 import objection from 'objection';
 
-export default (Model: objection.Model) => {
+import { type THelpers } from '../models.helpers';
 
-  return class Users extends Model {
+export default class Users extends objection.Model {
 
-    static get tableName() {
-      return 'users';
-    }
+  helpers: THelpers;
 
-  };
+  static get tableName() {
+    return 'users';
+  }
 
 };
