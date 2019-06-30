@@ -325,6 +325,7 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
     getClientUsingParamId,
     // $FlowFixMe
     [
+      validations.credit_card_brand,
       validations.credit_card_number,
       validations.credit_card_expiration,
       validations.credit_card_owner,

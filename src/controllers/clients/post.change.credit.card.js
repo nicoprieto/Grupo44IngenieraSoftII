@@ -24,6 +24,7 @@ export default async (
   const { client } = res.locals;
   if(errors.isEmpty()) {
     const {
+      credit_card_brand,
       credit_card_number,
       credit_card_expiration,
       credit_card_owner,
@@ -34,6 +35,7 @@ export default async (
       const updatedClient = await client
         .$query()
         .patchAndFetch({
+          credit_card_brand,
           credit_card_number,
           credit_card_expiration,
           credit_card_owner,

@@ -18,6 +18,17 @@ block container
   )
 
     div.form-group
+      label(for="credit_card_brand") Marca:
+      input(
+        type="text"
+        id="credit_card_brand"
+        name="credit_card_brand"
+        class="form-control"
+        placeholder="Ingrese marca"
+        value=data.credit_card_brand
+      )
+
+    div.form-group
       label(for="credit_card_number") Numero:
       input(
         type="text"
@@ -29,7 +40,7 @@ block container
       )
 
     div.form-group
-      label(for="credit_card_expiration") Fecha de expiracion (dd/yy):
+      label(for="credit_card_expiration") Fecha de expiracion (mm/yy):
       input(
         type="text"
         id="credit_card_expiration"
