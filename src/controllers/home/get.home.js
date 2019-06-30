@@ -38,6 +38,7 @@ export default async (
       residences = await Residences
         .query()
         .eager('photos')
+        .limit(5)
         // dont care if they are enable or removed
     }
     res.render(
