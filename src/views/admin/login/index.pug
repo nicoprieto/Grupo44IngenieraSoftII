@@ -10,43 +10,52 @@ html
     link(rel='stylesheet', href='/css/styles.css')
   body
 
-    if errors
-      ul.my-errors
-        for error in errors
-          li= error.msg
-
-    img(
-      src="/images/logo.png"
-      alt="Home Switch Home - Logo"
-      class="logo-img"
-    )
-
-    form(
-      action="/admin/login"
-      method="POST"
-      class="form-registration"
-    )
-      label(for="email") Email:
-      input(
-        type="email"
-        id="email"
-        name="email"
-        class="form-control"
-        placeholder="email"
-        value=data.email
+    header.home-header
+      a(
+        href="/"
       )
+        img(
+          src="/images/logo.png"
+          class="home-logo"
+        )
 
-      label(for="pass") Clave:
-      input(
-        type="password"
-        id="pass"
-        name="pass"
-        placeholder="clave"
-        class="form-control"
-      )
+    div.container
+      div.login-form
+        h3 Iniciar sesion
 
-      input(
-        type="submit"
-        value="Ingresar"
-        class="btn btn-lg btn-primary btn-block"
-      )
+        if errors
+          ul.my-errors
+            for error in errors
+              li= error.msg
+
+        form(
+          action="/admin/login"
+          method="POST"
+        )
+          div.form-group
+            label(for="email") Email:
+            input(
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="email"
+              value=data.email
+            )
+
+          div.form-group
+            label(for="pass") Clave:
+            input(
+              type="password"
+              id="pass"
+              name="pass"
+              placeholder="clave"
+              class="form-control"
+            )
+
+          div.form-group
+            input(
+              type="submit"
+              value="Ingresar"
+              class="btn btn-lg btn-primary btn-block"
+            )

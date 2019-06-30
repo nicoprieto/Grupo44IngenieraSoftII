@@ -24,25 +24,35 @@ import {
 export default (helpers: THelpers, models: TModelsWithHelpers) => {
   const router = express.Router();
 
+  // BUG I dont know how to use cookie sessions
+  const onGuardErrorFunction = (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+    if(err.isGuard) {
+      // user has been redirect to same url but still is failing
+      if(req.originalUrl.includes('try-again')) {
+        res.status(helpers.HttpStatusCodes.FORBIDDEN).send();
+      } else {
+        // destroy session
+        req.session.destroy(() => {
+          // and redirect again to the same url
+          res.redirect(`${req.originalUrl}?try-again`);
+        });
+      }
+    } else {
+      next();
+    }
+  };
+
   router.get(
     '/login',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getLogin(req, res, helpers, models)
   );
 
   router.post(
     '/login',
     helpers.guard.requireAny('guest/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      if(err.isGuard) {
-        res.redirect('/');
-      }
-    },
+    onGuardErrorFunction,
     // $FlowFixMe
     [
       helpers
@@ -62,24 +72,14 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
   router.get(
     '/logout',
     helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getLogout(req, res, helpers, models)
   );
 
   router.get(
     '/dashboard',
     helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => {
       getDashboard(req, res, helpers, models)
     }

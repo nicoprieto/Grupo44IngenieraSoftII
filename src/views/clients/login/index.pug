@@ -1,42 +1,43 @@
 extends ../_layout.pug
 
 block container
-  if errors
-    ul.my-errors
-      for error in errors
-        li= error.msg
+  div.login-form
+    if errors
+      ul.my-errors
+        for error in errors
+          li= error.msg
 
-  h3 Iniciar sesion
+    h3 Iniciar sesion
 
-  form(
-    action="/clients/login"
-    method="POST"
-  )
+    form(
+      action="/clients/login"
+      method="POST"
+    )
 
-    div.form-group
-      label(for="email") Email:
-      input(
-        type="email"
-        id="email"
-        name="email"
-        class="form-control"
-        placeholder="email"
-        value=data.email
-      )
+      div.form-group
+        label(for="email") Email:
+        input(
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          placeholder="email"
+          value=data.email
+        )
 
-    div.form-group
-      label(for="pass") Clave:
-      input(
-        type="password"
-        id="pass"
-        name="pass"
-        placeholder="clave"
-        class="form-control"
-      )
+      div.form-group
+        label(for="pass") Clave:
+        input(
+          type="password"
+          id="pass"
+          name="pass"
+          placeholder="clave"
+          class="form-control"
+        )
 
-    div.form-group
-      input(
-        type="submit"
-        value="Ingresar"
-        class="btn btn-lg btn-primary btn-block"
-      )
+      div.form-group
+        input(
+          type="submit"
+          value="Ingresar"
+          class="btn btn-lg btn-primary btn-block"
+        )
