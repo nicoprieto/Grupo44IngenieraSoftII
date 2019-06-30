@@ -185,3 +185,10 @@ img.selectedPhoto {
   flex: 1;
   justify-content: space-between;
 }
+
+/**
+  ADMIN WEEK CREATION
+*/
+select#residences {
+  height: 300px;
+}

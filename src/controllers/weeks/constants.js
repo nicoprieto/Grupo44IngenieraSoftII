@@ -32,6 +32,7 @@ type TCreateViewProps = {
     msg: string,
     param: string,
   }>,
+  isDebugMode: bool,
   data: TWeek,
   residences: TResidences,
 }; 
@@ -40,5 +41,7 @@ export const createViewFile = 'admin/weeks/details';
 export const createViewProps: TCreateViewProps = {
   title: 'Semanas - Crear',
   data: { ...emptyWeek },
+  // allows creation week/year by user
+  isDebugMode: false,
   residences: [],
 };

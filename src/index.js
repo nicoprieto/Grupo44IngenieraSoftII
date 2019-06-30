@@ -27,7 +27,12 @@ import bodyParser from 'body-parser';
 import morganBody from 'morgan-body';
 
 // logging
-morganBody(app);
+morganBody(
+  app,
+  {
+    logResponseBody: false,
+  }
+);
 
 app.use(express.static('public'));
 app.use(express.static('uploads'));

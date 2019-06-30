@@ -23,15 +23,18 @@ import {
 export default (helpers: THelpers, models: TModels) => {
   const router = express.Router({ mergeParams: true });
 
+  const onGuardErrorFunction = (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
+    // redirect to login is user doest have admin/* permission
+    if(err.isGuard) {
+      res.redirect('/admin/login');
+    } else {
+      next();
+    }
+  };
+
   router.get(
     '/',
-    helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
+    helpers.guard.requireAny('admin/*'),onGuardErrorFunction,
     (req: $Request, res: $Response) => getList(req, res, helpers, models)
   );
 
@@ -39,24 +42,14 @@ export default (helpers: THelpers, models: TModels) => {
   router.get(
     '/create',
     helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
+    onGuardErrorFunction,
     (req: $Request, res: $Response) => getCreate(req, res, helpers, models)
   );
 
   router.post(
     '/create',
     helpers.guard.requireAny('admin/*'),
-    (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
-      // redirect to login is user doest have admin/* permission
-      if(err.isGuard) {
-        res.redirect('/admin/login');
-      }
-    },
+    onGuardErrorFunction,
     // $FlowFixMe
     [
       helpers

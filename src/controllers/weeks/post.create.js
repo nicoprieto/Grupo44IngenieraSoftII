@@ -21,8 +21,16 @@ export default async (
   helpers: THelpers,
   { Weeks, Residences }: TModels
 ) => {
+  const isDebugMode = typeof req.query.debug !== 'undefined';
   // used in the return data
-  const residences = await Residences.query().select('id', 'title');
+  const residences = await Residences
+    .query()
+    .select('id', 'title')
+    .where({
+      isRemoved: false,
+      isEnabled: true,
+    })
+  ;
   const errors = helpers.validator.validationResult(req);
   if(errors.isEmpty()) {
     try {
@@ -51,6 +59,9 @@ export default async (
             id: null,
             ...req.body,
           },
+          // if you can post so is enabled
+          isEnabled: true,
+          isDebugMode,
           residences,
         }
       );
@@ -66,6 +77,9 @@ export default async (
           id: null,
           ...req.body,
         },
+        // if you can post so is enabled
+        isEnabled: true,
+        isDebugMode,
         residences,
       }
     );

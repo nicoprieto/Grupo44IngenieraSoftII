@@ -1,8 +1,17 @@
 extends ../_layout.pug
 
+block scripts
+  script(src='/js/moment.js')
+  script(src='/js/weeks.number.and.year.parser.js')
+
 block container
+  h3= title
+
   if residences.length === 0
     div.alert.alert-info No puede crear semanas si no tienen residencias creadas
+
+  else if !isEnabled
+    div.alert.alert-info Ya ha creado la semana de reservas, debe esperar a la semana siguiente para poder crear una nueva
 
   else
     if errors
@@ -10,46 +19,82 @@ block container
         for error in errors
           li= error.msg
 
-    h3= title
-
-    if typeof data.weekString === 'string'
-      h6= data.weekString
+    div.alert.alert-info
+      span Se creara una semana empezando el dia 
+      span#weekStartDate= data.weekStartDate
+      span  hasta el dia 
+      span#weekEndDate= data.weekEndDate
 
     form(
       action=data.id === null ? "/admin/weeks/create" : "/admin/weeks/update"
       method="POST"
     )
 
-      div.form-group
-        label(for="number") Semana numero:
+      if isDebugMode
+        div.form-group
+          label(for="number") Semana numero:
+          input(
+            type="number"
+            id="number"
+            name="number"
+            class="form-control"
+            placeholder="Ingrese la semana numero"
+            value=data.number
+          )
+
+        div.form-group
+          label(for="year") Anio:
+          input(
+            type="number"
+            id="year"
+            name="year"
+            class="form-control"
+            placeholder="Ingrese el anio"
+            value=data.year
+          )
+
+        div.form-group
+          label(for="residences_id") Residencias:
+          select#residences.form-control(name="residences_id" multiple)
+            for residence in residences
+              option(
+                value=residence.id
+                selected=data.id === null || data.residences_id === residence.id
+              )= residence.title
+      
+      else
         input(
-          type="text"
+          type="hidden"
           id="number"
           name="number"
-          class="form-control"
-          placeholder="Ingrese la semana numero"
           value=data.number
         )
-
-      div.form-group
-        label(for="year") Anio:
         input(
-          type="text"
+          type="hidden"
           id="year"
           name="year"
-          class="form-control"
-          placeholder="Ingrese el anio"
           value=data.year
         )
-
-      div.form-group
-        label(for="residences") Residencias:
-        select#residences.form-control(name="residences_id" multiple)
+        select(
+          style="display:none"
+          id="residences_id"
+          name="residences_id"
+          multiple
+        )
           for residence in residences
             option(
               value=residence.id
-              selected=data.id === null || data.residences_id === residence.id
+              selected=true
             )= residence.title
+
+        h6 Acontinuacion se muestran las residencias a las cuales podran ser resevadas
+        ul
+        for residence in residences
+          li
+            a(
+              href=`/admin/residences/${residence.id}`
+            )=residence.title
+        br
       
       div.form-group
         input(
