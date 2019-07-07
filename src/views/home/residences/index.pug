@@ -1,0 +1,87 @@
+extends ../_layout.pug
+
+block stylesheets
+  link(rel='stylesheet', href='/css/jquery-ui.min.css')
+
+block scripts
+  script(src='/js/jquery-ui.min.js')
+  script(src='/js/datepicker-es.js')
+  script(src='/js/init.datepicker.js')
+
+block container
+
+  if client.id !== null
+    div.alert.alert-info
+      if errors
+        ul.my-errors
+          for error in errors
+            li= error.msg
+      h6 Buscar residencias
+      form#searchForm(
+        method="GET"
+        action="/residences/search"
+        class="form-inline"
+      )
+        select#city.form-control.my-1.mr-sm-2(name="city")
+          option(
+            value=""
+          ) Seleccione una localidad...
+          option(
+            value="Todas"
+            selected=(searchParams.city === "Todas")
+          ) Todas
+          for city in cities
+            option(
+              value=city
+              selected=(searchParams.city === city)
+            )= city
+
+        div.form-group.my-1.mr-sm-2
+          input(
+            type="text"
+            id="start_date"
+            name="start_date"
+            class="form-control i-am-a-datepicker"
+            placeholder="Fecha comienzo"
+            autoComplete="off"
+            value=searchParams.start_date
+          )
+
+        div.form-group.my-1.mr-sm-2
+          input(
+            type="text"
+            id="end_date"
+            name="end_date"
+            class="form-control i-am-a-datepicker"
+            placeholder="Fecha fin"
+            autoComplete="off"
+            value=searchParams.end_date
+          )
+
+        button(
+          type="submit"
+          class="btn btn-primary mb-2"
+        ) Buscar
+
+  if residences.length === 0 && client.id === null
+    div.alert.alert-info No hay residencias cargadas en el sistema
+
+  else if residences.length === 0 && client.id !== null
+    div.alert.alert-info No hay residencias disponibles para ser reservadas
+
+  else
+    for residence in residences
+      div.home-residence
+        h3= `Residencia ${residence.title}`
+        div
+          for photo in residence.photos
+            img(
+              src=`/residences/${photo.filename}`
+              alt=`Foto residencia ${photo.id}`
+            )
+        br
+
+        a(
+          title="Ver mas informacion →"
+          href=(client.id === null ? '/clients/register' : `/residences/${residence.id}`)
+        ) Ver mas informacion →

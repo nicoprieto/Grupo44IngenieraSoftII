@@ -6,23 +6,7 @@ block stylesheets
 block scripts
   script(src='/js/jquery-ui.min.js')
   script(src='/js/datepicker-es.js')
-  script.
-    $(function() {
-      $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
-      $('.birth_date-calendar').datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        onChangeMonthYear: function (year, month, inst) {
-            var date = $(".birth_date-calendar").val();
-            if ($.trim(date) != "") {
-                var newDate = inst.currentDay + "/" + (month < 10 ? "0" + month : month) + "/" + year;
-                $(".birth_date-calendar").val(newDate);
-            }
-        }
-      });
-    });
+  script(src='/js/init.datepicker.js')
 
 block container
 
@@ -76,7 +60,7 @@ block container
         type="text"
         id="birth_date"
         name="birth_date"
-        class="form-control birth_date-calendar"
+        class="form-control i-am-a-datepicker"
         placeholder="Ingrese su fecha de nacimiento"
         value=data.birth_date
         autocomplete="off"

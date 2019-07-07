@@ -18,6 +18,8 @@ import isBirthDateAdultAge from './is.birth.date.adult.age';
 
 import isCreditCardExpirationValid from './is.credit.card.expiration.valid';
 
+import moment from './moment';
+
 export type THelpers = {
   guard: TGuard,
   validator: TValidator,
@@ -25,6 +27,7 @@ export type THelpers = {
   HttpStatusCodes: typeof HttpStatusCodes,
   isBirthDateAdultAge: typeof isBirthDateAdultAge,
   isCreditCardExpirationValid: typeof isCreditCardExpirationValid,
+  moment: typeof moment,
 };
 
 export default {
@@ -35,4 +38,5 @@ export default {
   HttpStatusCodes,
   isBirthDateAdultAge,
   isCreditCardExpirationValid,
+  moment: moment,
 };

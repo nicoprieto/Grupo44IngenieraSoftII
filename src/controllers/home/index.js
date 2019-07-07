@@ -1,5 +1,7 @@
 // @flow
 
-import _getHome from './get.home';
+import _getResidences from './get.residences';
+import _getResidence from './get.residence';
 
-export const getHome = _getHome;
+export const getResidences = _getResidences;
+export const getResidence = _getResidence;

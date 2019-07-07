@@ -6,6 +6,8 @@ import { type THelpers } from '../models.helpers';
 
 import { type TResidencePhotos } from './ResidencesPhotos';
 
+import { type TWeeks } from './Weeks';
+
 export type TResidence = {
   id: number | null,
   title: string,
@@ -24,6 +26,7 @@ export type TResidence = {
   isRemoved: bool,
   // derived from relation, not stored as field
   photos?: TResidencePhotos,
+  weeks?: TWeeks,
 };
 
 export type TResidences = Array<TResidence>;
@@ -122,8 +125,8 @@ export default class Residences extends objection.Model {
         relation: objection.Model.HasManyRelation,
         modelClass: __dirname + '/Weeks',
         join: {
-          from: 'residences.weeks_id',
-          to: 'weeks.id'
+          from: 'residences.id',
+          to: 'weeks.residences_id'
         }
       },
     }

@@ -1,0 +1,74 @@
+extends ../_layout.pug
+
+block container
+
+    div.home-residence
+      h3= `Residencia ${residence.title}`
+      div
+        for photo in residence.photos
+          img(
+            src=`/residences/${photo.filename}`
+            alt=`Foto residencia ${photo.id}`
+          )
+
+      p= residence.description
+
+      p Ubicacion
+      ul
+        li
+          span Calle: 
+          strong= residence.address_street
+        li
+          span Codigo postal: 
+          strong= residence.address_postal_code
+        li
+          span Ciudad: 
+          strong= residence.address_city
+        li
+          span Provincia/Estado: 
+          strong= residence.address_state
+        li
+          span Pais: 
+          strong= residence.address_nation
+        if residence.address_apartament !== ''
+          li
+            span Apartamento: 
+            strong= residence.address_apartament
+        if residence.address_flat !== ''
+          li
+            span Piso: 
+            strong= residence.address_flat
+
+    br
+
+    h3 Semanas disponibles
+
+    if Array.isArray(residence.weeks)
+      for week in residence.weeks
+        form(
+          method="POST"
+          action=`/weeks/${week.id}/reservate`
+          class="form-inline"
+        )
+          label(class="my-1 mr-2") Semana numero &nbsp;
+            strong= `${week.number}/${week.year}`
+            span &nbsp;, que va desde &nbsp;
+            strong= `${week.weekStartDate()}`
+            span &nbsp; hasta &nbsp;
+            strong= `${week.weekEndDate()}`
+
+          input(
+            type="hidden"
+            value=client.id
+            name="clients_id"
+          )
+
+          button(
+            type="submit"
+            class="btn btn-primary"
+          ) Reservar
+
+        br
+
+    else
+      div.alert.alert-info Esta residencia no tiene semanas disponbibles

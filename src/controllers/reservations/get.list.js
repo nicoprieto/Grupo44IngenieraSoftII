@@ -27,7 +27,9 @@ export default async (
         data: await Reservations
           .query()
           .joinEager('residence')
-          .modifyEager('residence', (builder) => builder.select('residences.id', 'title'))
+          .modifyEager('residence', (builder) => 
+            builder.select('residences.id', 'title')
+          )
           //.select('reservations.*', 'residence.id', 'residence.title')
           .where('reservations.isRemoved', false)
           .orderBy('reservations.id', 'DESC'),

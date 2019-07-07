@@ -1,14 +1,16 @@
 // @flow
 
 // $FlowFixMe
-import { check, validationResult } from 'express-validator/check';
+import { check, query, validationResult } from 'express-validator/check';
 
 export type TValidator = {
-  check: check,
-  validationResult: validationResult,
+  check: typeof check,
+  query: typeof query,
+  validationResult: typeof validationResult,
 };
 
 export default {
   check,
+  query: query,
   validationResult,
 };
