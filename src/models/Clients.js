@@ -20,6 +20,8 @@ export type TClient = {|
   credit_card_expiration: string,
   credit_card_owner: string,
   credit_card_security_code: string,
+  creditPoints: number,
+  type: 'premium' | 'normal',
   isEnabled: bool,
   created_at: string,
   updated_at: string,
@@ -43,6 +45,8 @@ export const emptyClient: TClient = {
   credit_card_expiration: '',
   credit_card_owner: '',
   credit_card_security_code: '',
+  creditPoints: 0,
+  type: 'normal',
   isEnabled: false,
   created_at: '',
   updated_at: '',
@@ -91,6 +95,8 @@ export default class Clients extends objection.Model {
       credit_card_expiration,
       credit_card_owner,
       credit_card_security_code,
+      creditPoints: 2,
+      type: 'premium',
       isEnabled: true,
       created_at: Clients.helpers.now(),
       updated_at: '',
@@ -109,6 +115,14 @@ export default class Clients extends objection.Model {
 
   static get tableName() {
     return 'clients';
+  }
+
+  $beforeInsert() {
+    this.created_at = Clients.helpers.now();
+  }
+
+  $beforeUpdate() {
+    this.updated_at = Clients.helpers.now();
   }
 
 };

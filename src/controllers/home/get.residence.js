@@ -25,13 +25,17 @@ export default async (
 ) => {
   let { client } = res.locals;
   const id = req.params['0'];
+  const didWeekHasBeenReservated = typeof req.query.reservated !== 'undefined';
+  const errorMessage = typeof req.query.error === 'string' ? req.query.error : '';
   try {
     const residence = await Residences
       .query()
       .findById(id)
       .eager('[photos, weeks]')
-      .joinRelation('weeks')
-      .where({ 
+      .modifyEager('weeks', (builder) => 
+        builder.where('clients_id', null)
+      )
+      .where({
         'residences.isRemoved': false,
       })
     ;
@@ -40,8 +44,12 @@ export default async (
         residenceViewFile,
         { 
           ...residenceViewProps,
-          residence,
+          residence: {
+            ...residence,
+          },
           client,
+          didWeekHasBeenReservated,
+          errorMessage,
         }
       );
     // id is removed or missing

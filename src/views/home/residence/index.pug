@@ -3,6 +3,13 @@ extends ../_layout.pug
 block container
 
     div.home-residence
+
+      if errorMessage !== ''
+        div.alert.alert-danger= errorMessage
+
+      if didWeekHasBeenReservated
+        div.alert.alert-success Residencia reservada correctamente
+
       h3= `Residencia ${residence.title}`
       div
         for photo in residence.photos
@@ -43,24 +50,26 @@ block container
 
     h3 Semanas disponibles
 
-    if Array.isArray(residence.weeks)
+    if(residence.weeks.length === 0)
+      div.alert.alert-info No hay semanas para reservar
+    else
       for week in residence.weeks
         form(
           method="POST"
-          action=`/weeks/${week.id}/reservate`
+          action=`/clients/${client.id}/residences/${residence.id}`
           class="form-inline"
         )
           label(class="my-1 mr-2") Semana numero &nbsp;
             strong= `${week.number}/${week.year}`
             span &nbsp;, que va desde &nbsp;
-            strong= `${week.weekStartDate()}`
+            strong= `${week.getWeekStartDate()}`
             span &nbsp; hasta &nbsp;
-            strong= `${week.weekEndDate()}`
+            strong= `${week.getWeekEndDate()}`
 
           input(
             type="hidden"
-            value=client.id
-            name="clients_id"
+            name="weeks_id"
+            value=week.id
           )
 
           button(
@@ -69,6 +78,3 @@ block container
           ) Reservar
 
         br
-
-    else
-      div.alert.alert-info Esta residencia no tiene semanas disponbibles

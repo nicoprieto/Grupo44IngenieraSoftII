@@ -23,7 +23,6 @@ module.exports = [
     created_at: now(),
     updated_at: '',
     isRemoved: false,
-    weeks_id: null,
   },
 
   {
@@ -42,7 +41,6 @@ module.exports = [
     created_at: now(),
     updated_at: '',
     isRemoved: false,
-    weeks_id: null,
   },
 
   {
@@ -61,7 +59,6 @@ module.exports = [
     created_at: now(),
     updated_at: '',
     isRemoved: false,
-    weeks_id: null,
   },
 
   {
@@ -80,7 +77,6 @@ module.exports = [
     created_at: now(),
     updated_at: '',
     isRemoved: false,
-    weeks_id: null,
   },
 
   {
@@ -99,6 +95,5 @@ module.exports = [
     created_at: now(),
     updated_at: '',
     isRemoved: false,
-    weeks_id: null,
   },
 ];

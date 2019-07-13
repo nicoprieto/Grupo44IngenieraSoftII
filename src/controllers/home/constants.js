@@ -49,6 +49,8 @@ type TResidenceProps = {
   title: string,
   client: TClient,
   residence: TResidence,
+  didWeekHasBeenReservated: bool,
+  errorMessage: string,
 }; 
 
 export const residenceViewFile = 'home/residence/index';
@@ -56,4 +58,6 @@ export const residenceViewProps: TResidenceProps = {
   title: 'Home Switch Home - Residencia',
   client: emptyClient,
   residence: emptyResidence,
+  didWeekHasBeenReservated: false,
+  errorMessage: '',
 };

@@ -93,13 +93,13 @@ export default class Weeks extends objection.Model {
     };
   }
 
-  weekStartDate() {
+  getWeekStartDate() {
     const d = Weeks.helpers.weekYearToLocaledateString(this.number, this.year);
     const format = 'DD/MM/YYYY';
     return Weeks.helpers.moment(d, format).startOf('week').format(format);
   }
 
-  weekEndDate() {
+  getWeekEndDate() {
     const d = Weeks.helpers.weekYearToLocaledateString(this.number, this.year);
     const format = 'DD/MM/YYYY';
     return Weeks.helpers.moment(d, format).endOf('week').format(format);

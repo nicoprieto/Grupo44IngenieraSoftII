@@ -19,6 +19,7 @@ export default async (
   helpers: THelpers,
   { Weeks }: TModels
 ) => {
+  const isDebugMode = typeof req.query.debug !== 'undefined';
   try {
     res.render(
       listViewFile,
@@ -26,13 +27,14 @@ export default async (
         ...listViewProps,
         data: await Weeks
           .query()
-          .joinEager('residence')
+          .eager('residence')
           .modifyEager(
             'residence',
-            (builder) => builder.select('residences.id', 'title')
+            (builder) => builder.select('id', 'title')
           )
           .where('weeks.isRemoved', false)
           .orderBy('weeks.id', 'DESC'),
+          isDebugMode,
       }
     );
   } catch(e) {

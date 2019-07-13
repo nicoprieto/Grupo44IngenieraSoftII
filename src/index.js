@@ -105,11 +105,18 @@ app.use(
   adminWeeks(routesHelpers, models)
 );
 
-import clients from './routes/clients';
+import clientsProfile from './routes/clients/profile';
 app.use(
   '/clients',
   // $FlowFixMe
-  clients(routesHelpers, models)
+  clientsProfile(routesHelpers, models)
+);
+
+import clientsResidences from './routes/clients/residences';
+app.use(
+  '/clients/:id/residences',
+  // $FlowFixMe
+  clientsResidences(routesHelpers, models)
 );
 
 import home from './routes/home';

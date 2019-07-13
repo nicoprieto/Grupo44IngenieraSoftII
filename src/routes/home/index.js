@@ -33,7 +33,12 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
       client = await models.Clients.query().findById(id);
       // extreme rare case
       if(!(client instanceof models.Clients)) {
-        return res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
+        return new Promise((resolve) => {
+          req.session.destroy(() => {
+            res.redirect('/');
+            resolve();
+          });
+        });
       }
     }
     // put client in res.locals

@@ -14,7 +14,8 @@ import {
   getList,
   getCreate,
   postCreate,
-} from '../../controllers/weeks';
+  getDeleteAll,
+} from '../../controllers/admin.weeks';
 
 // ----------------------
 // export default
@@ -75,6 +76,13 @@ export default (helpers: THelpers, models: TModels) => {
         // TODO: how to test isEnabled?
     ],
     (req: $Request, res: $Response) => postCreate(req, res, helpers, models),
+  );
+
+  router.get(
+    '/delete-all',
+    helpers.guard.requireAny('admin/*'),
+    onGuardErrorFunction,
+    (req: $Request, res: $Response) => getDeleteAll(req, res, helpers, models)
   );
 
   return router;

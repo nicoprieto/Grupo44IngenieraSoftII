@@ -9,12 +9,14 @@ import {
 type TListViewProps = {
   title: string,
   data: TWeeks,
+  isDebugMode: bool,
 }; 
 
 export const listViewFile = 'admin/weeks/list';
 export const listViewProps: TListViewProps = {
   title: 'Semanas - Listado',
   data: [],
+  isDebugMode: false,
 };
 
 // *********************

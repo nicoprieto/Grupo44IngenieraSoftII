@@ -11,6 +11,7 @@ block container
           th Residencia
           th Semana
           th Anio
+          th Rango
           th Acciones
 
       tbody
@@ -24,13 +25,16 @@ block container
               )= item.residence.title
             td= item.number
             td= item.year
+            td= `de ${item.getWeekStartDate()} hasta ${item.getWeekEndDate()}`
             td
               a(
                 href=`/admin/weeks/${item.id}`
                 class="btn btn-link"
               ) Ver detalle
-              a(
-                href=`/admin/weeks/${item.id}/remove`
-                class="btn btn-link"
-              ) Eliminar
+
+    if isDebugMode
+      a(
+        href=`/admin/weeks/delete-all`
+        class="btn btn-danger"
+      ) Borrar todas las semanas
               

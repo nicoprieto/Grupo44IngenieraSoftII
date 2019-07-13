@@ -1,6 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return Promise.all([
+    /*
     knex.schema.dropTable("residences").then(function() {
       return knex.schema.createTable('residences', function(table) {
         table.increments('id');
@@ -21,11 +22,13 @@ exports.up = function(knex, Promise) {
         table.foreign('weeks_id').references('weeks.id');
       })
     })
+    */
   ]);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
+    /*
     knex.schema.dropTable("residences").then(function() {
       return knex.schema.createTable('residences', function(table) {
         table.increments('id');
@@ -44,5 +47,6 @@ exports.down = function(knex, Promise) {
         table.boolean('isRemoved');
       })
     })
+    */
   ]);
 };
