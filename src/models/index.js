@@ -10,6 +10,7 @@ import Residences from './Residences';
 import ResidencesPhotos from './ResidencesPhotos';
 import Reservations from './Reservations';
 import Clients from './Clients';
+import ClientsPendingPremium from './ClientsPendingPremium';
 import Weeks from './Weeks';
 
 export type TModels = {
@@ -18,6 +19,7 @@ export type TModels = {
   ResidencesPhotos: Model,
   Reservations: Model,
   Clients: Model,
+  ClientsPendingPremium: Model,
   Weeks: Model,
 };
 
@@ -47,6 +49,7 @@ export default (databasePath: string): TModelsWithHelpers | null => {
     ResidencesPhotos.helpers = helpers;
     Reservations.helpers = helpers;
     Clients.helpers = helpers;
+    ClientsPendingPremium.helpers = helpers;
     Weeks.helpers = helpers;
 
     return {
@@ -55,6 +58,7 @@ export default (databasePath: string): TModelsWithHelpers | null => {
       ResidencesPhotos,
       Reservations,
       Clients,
+      ClientsPendingPremium,
       Weeks,
       helpers,
       knex,

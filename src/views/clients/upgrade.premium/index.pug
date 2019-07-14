@@ -1,0 +1,65 @@
+extends ../_layout.pug
+
+block container
+  div.login-form
+    if errors
+      ul.my-errors
+        for error in errors
+          li= error.msg
+
+    h3= title
+
+    if hasPendingRequest
+      div.alert.alert-warning
+        p Usted ya posee un pedido de alta premium
+        p Nos estaremos comunicando con usted a la brevedad
+
+    else if didPost
+
+      div.alert.alert-success
+        p Solicitud de alta a usuario premium enviada satisfactoriamente
+      
+      div
+        p Nos estaremos comunicandonos con usted telefonicamente a la brevedad al telefono 
+          strong= client.phone
+        p De cualquier modo sepa que puede visitarnos a la siguiente direccion
+          ul
+            li Calle 53 esq 1
+            li n213
+            li tel 40311212111
+            li La Plata, Bs As, Argentina
+
+    else
+
+      form(
+        action=`/clients/${client.id}/upgrade-premium`
+        method="POST"
+      )
+
+        div.alert.alert-warning
+          strong Beneficios de ser usuario premium
+          ul
+            li Siendo usuario premium usted podra reservar residencias antes que nadie
+
+        div.alert.alert-success
+          strong El costo de subscripcion a premium es de 20 pesos mes
+
+        div.alert.alert-info
+          strong Muy importante
+          p El alta a premium se concreta telefónica o personalmente en nuestras oficinas
+
+        div.form-group
+          label(for="description") Motivo de traspaso (opcional):
+          textarea(
+            id="description"
+            name="description"
+            class="form-control"
+            placeholder="Ingrese si usted lo desea el motivo de traspaso a premium"
+          )
+
+        div.form-group
+          input(
+            type="submit"
+            value=title
+            class="btn btn-lg btn-primary btn-block"
+          )

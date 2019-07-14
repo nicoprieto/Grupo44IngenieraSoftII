@@ -75,3 +75,48 @@ export const loginViewProps: TLoginProps = {
 // *********************
 //
 // *********************
+
+type TUpgradePremiumViewProps = {
+  title: string,
+  errors?: Array<{
+    location: string,
+    msg: string,
+    param: string,
+  }>,
+  client: TClient,
+  didPost: bool,
+  hasPendingUpgradeRequest: bool,
+};
+
+export const upgradePremiumViewFile = 'clients/upgrade.premium/index';
+export const upgradePremiumViewProps: TUpgradePremiumViewProps = {
+  title: 'Solicitar alta a plan premium',
+  client: emptyClient,
+  didPost: false,
+  hasPendingUpgradeRequest: false,
+};
+
+
+// *********************
+//
+// *********************
+
+type TDowngradePremiumViewProps = {
+  title: string,
+  errors?: Array<{
+    location: string,
+    msg: string,
+    param: string,
+  }>,
+  client: TClient,
+  didPost: bool,
+  hasPendingRequest: bool,
+};
+
+export const downgradePremiumViewFile = 'clients/downgrade.premium/index';
+export const downgradePremiumViewProps: TDowngradePremiumViewProps = {
+  title: 'Solicitar baja de plan premium',
+  client: emptyClient,
+  didPost: false,
+  hasPendingRequest: false,
+};

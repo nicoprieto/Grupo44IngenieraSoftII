@@ -15,14 +15,14 @@ export default () => {
   const admin = new Guard.Role('admin', {
     can: ['admin/*'],
     func: async (req) => {
-      return req.session.isAdmin;
+      return req.session.isAdmin === true;
     },
   });
 
   const client = new Guard.Role('client', {
     can: ['client/*'],
     func: async (req) => {
-      return req.session.isClient;
+      return req.session.isClient === true;
     },
   });
 

@@ -1,0 +1,43 @@
+extends ../_layout.pug
+
+block container
+  div.login-form
+    if errors
+      ul.my-errors
+        for error in errors
+          li= error.msg
+
+    h3= title
+
+    if hasPendingRequest
+      div.alert.alert-warning
+        p Usted ya posee un pedido de baja plan premium
+        p Estaremos confirmando su baja de plan a la brevedad
+
+    else if didPost
+
+      div.alert.alert-success
+        p Solicitud de baja a usuario normal enviada satisfactoriamente
+      
+    else
+
+      form(
+        action=`/clients/${client.id}/downgrade-premium`
+        method="POST"
+      )
+
+        div.form-group
+          label(for="description") Motivo de traspaso (opcional):
+          textarea(
+            id="description"
+            name="description"
+            class="form-control"
+            placeholder="Ingrese si usted lo desea el motivo de baja plan premium"
+          )
+
+        div.form-group
+          input(
+            type="submit"
+            value=title
+            class="btn btn-lg btn-primary btn-block"
+          )

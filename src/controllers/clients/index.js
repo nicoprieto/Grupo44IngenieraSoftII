@@ -12,6 +12,10 @@ import _getChangePass from './get.change.pass';
 import _postChangePass from './post.change.pass';
 import _getChangeCreditCard from './get.change.credit.card';
 import _postChangeCreditCard from './post.change.credit.card';
+import _getUpgradePremium from './get.upgrade.premium';
+import _postUpgradePremium from './post.upgrade.premium';
+import _getDowngradePremium from './get.downgrade.premium';
+import _postDowngradePremium from './post.downgrade.premium';
 
 export const getRegister = _getRegister;
 export const postRegister = _postRegister;
@@ -25,3 +29,7 @@ export const getChangePass = _getChangePass;
 export const postChangePass = _postChangePass;
 export const getChangeCreditCard = _getChangeCreditCard;
 export const postChangeCreditCard = _postChangeCreditCard;
+export const getUpgradePremium = _getUpgradePremium;
+export const postUpgradePremium = _postUpgradePremium;
+export const getDowngradePremium = _getDowngradePremium;
+export const postDowngradePremium = _postDowngradePremium;

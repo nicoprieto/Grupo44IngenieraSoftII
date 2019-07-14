@@ -112,6 +112,20 @@ app.use(
   clientsProfile(routesHelpers, models)
 );
 
+import clientsLogin from './routes/clients/login';
+app.use(
+  '/clients',
+  // $FlowFixMe
+  clientsLogin(routesHelpers, models)
+);
+
+import clientsRegister from './routes/clients/register';
+app.use(
+  '/clients',
+  // $FlowFixMe
+  clientsRegister(routesHelpers, models)
+);
+
 import clientsResidences from './routes/clients/residences';
 app.use(
   '/clients/:id/residences',

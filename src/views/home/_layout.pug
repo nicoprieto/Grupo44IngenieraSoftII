@@ -50,7 +50,7 @@ html
         if client.type === 'normal'
           div.alert.alert-warning Usted no es usuario premium, siendo usuario premium, usted proba reservar residencias durante el periodo premium
             a(
-              href=`/clients/${client.id}/premium-upgrade`
+              href=`/clients/${client.id}/upgrade-premium`
               class="btn btn-warning"
             )
               strong Quiero ser premium
@@ -67,6 +67,14 @@ html
               title="Mi perfil"
               class="btn btn-link btn-sm"
             ) Mi perfil
+
+          if client.type === 'premium'
+            label
+              a(
+                href=`/clients/${client.id}/downgrade-premium`
+                title="Solicitar baja del plan premium"
+                class="btn btn-link btn-sm"
+              ) Solicitar baja del plan premium
 
           label
             a(
