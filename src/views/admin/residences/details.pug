@@ -10,10 +10,13 @@ block container
       for error in errors
         li= error.msg
 
+  if didSuccess
+    div.alert.alert-info Datos actualizados satisfactoriamente
+
   h3= title
 
   form(
-    action=data.id === null ? "/admin/residences/create" : "/admin/residences/update"
+    action=data.id === null ? "/admin/residences/create" : `/admin/residences/${data.id}/update`
     method="POST"
     enctype="multipart/form-data"
   )
@@ -153,6 +156,17 @@ block container
         class="form-control"
         placeholder="Ingrese domicilio piso"
         value=data.address_flat
+      )
+
+    div.form-group
+      label(for="address_flat") Monto base:
+      input(
+        type="text"
+        id="starting_bid_price"
+        name="starting_bid_price"
+        class="form-control"
+        placeholder="Ingrese domicilio piso"
+        value=data.starting_bid_price
       )
 
     div.form-check

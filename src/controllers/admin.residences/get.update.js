@@ -20,7 +20,15 @@ export default async (
   { Residences, ResidencesPhotos }: TModels
 ) => {
   const id = req.params.id;
-  const residence = await Residences.query().findById(id).eager("photos");
+  const residence = await Residences
+    .query()
+    .findById(id)
+    .eager('photos')
+    .modifyEager(
+      'photos',
+      (builder) => builder.where('isRemoved', false)
+    )
+  ;
   if(residence instanceof Residences) {
     res.render(
       residenceUpdateViewFile,

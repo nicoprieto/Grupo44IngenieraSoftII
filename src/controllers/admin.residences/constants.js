@@ -49,12 +49,14 @@ type TUpdateViewProps = {
     param: string,
   }>,
   data: TResidence,
+  didSuccess: bool,
 }; 
 
 export const residenceUpdateViewFile = 'admin/residences/details';
 export const residenceUpdateViewProps: TCreateViewProps = {
   title: 'Residencia - Detalle',
   data: { ...emptyResidence },
+  didSuccess: false,
 };
 
 // *********************

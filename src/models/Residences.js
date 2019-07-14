@@ -86,7 +86,7 @@ export default class Residences extends objection.Model {
       address_apartament,
       address_flat,
       isEnabled,
-      price,
+      starting_bid_price,
     } = body;
     return {
       id: null,
@@ -101,6 +101,7 @@ export default class Residences extends objection.Model {
       address_apartament,
       address_flat,
       isEnabled: isEnabled === 'on',
+      starting_bid_price,
       created_at: Residences.helpers.now(),
       updated_at: '',
       isRemoved: false,
