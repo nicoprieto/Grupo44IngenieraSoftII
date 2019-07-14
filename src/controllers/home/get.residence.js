@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 
 import { type THelpers } from '../../routes.helpers';
-import { type TModels } from '../../models';
+import { type TModelsWithHelpers } from '../../models';
 
 import {
   emptyClient,
@@ -21,20 +21,40 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Clients, Weeks, Residences }: TModels
+  {
+    Clients,
+    Weeks,
+    Residences,
+    helpers: {
+      getWeeksRangeFromStartAndEndLocaledateStrings,
+      getYearsRangeFromStartAndEndLocaledateStrings,
+    },
+  }: TModelsWithHelpers
 ) => {
   let { client } = res.locals;
   const id = req.params['0'];
   const didWeekHasBeenReservated = typeof req.query.reservated !== 'undefined';
   const errorMessage = typeof req.query.error === 'string' ? req.query.error : '';
+  const start_date = req.query.start_date || '';
+  const end_date = req.query.end_date || '';
   try {
     const residence = await Residences
       .query()
       .findById(id)
       .eager('[photos, weeks]')
-      .modifyEager('weeks', (builder) => 
-        builder.where('clients_id', null)
-      )
+      .modifyEager('weeks', (builder) => {
+        if(start_date === '' && end_date === '') {
+          return builder.where('clients_id', null);
+        } else {
+          const weeksRange = getWeeksRangeFromStartAndEndLocaledateStrings(start_date, end_date);
+          const yearsRange = getYearsRangeFromStartAndEndLocaledateStrings(start_date, end_date);
+          return builder
+            .where('clients_id', null)
+            .whereIn('number', weeksRange)
+            .whereIn('year', yearsRange)
+          ;
+        }
+      })
       .where({
         'residences.isRemoved': false,
       })

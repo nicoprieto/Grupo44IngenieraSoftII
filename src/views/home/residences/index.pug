@@ -83,5 +83,5 @@ block container
 
         a(
           title="Ver mas informacion →"
-          href=(client.id === null ? '/clients/register' : `/residences/${residence.id}`)
+          href=(client.id === null ? '/clients/register' : `/residences/${residence.id}?start_date=${searchParams.start_date}&end_state=${searchParams.end_date}`)
         ) Ver mas informacion →
