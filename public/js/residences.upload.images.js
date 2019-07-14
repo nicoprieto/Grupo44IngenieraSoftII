@@ -13,4 +13,6 @@ $(function() {
     }
     $('#photosLength').val(this.files.length);
   });
+  // put an initial value
+  $('#photosLength').val($('.selectedPhoto').length);
 });

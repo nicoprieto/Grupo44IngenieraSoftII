@@ -96,6 +96,8 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
       validators.titleIsEmpty,
       validators.titleIsAlreadyInSameCity,
       validators.description,
+      validators.photosLengthMin1,
+      validators.photosLengthMax5,
       validators.address_street,
       validators.address_number,
       validators.address_postal_code,
