@@ -51,7 +51,7 @@ export default async (
     }
 
     if(client.creditPoints === 0) {
-      return res.redirect(`/residences/${residences_id}?error=No tiene mas creditos`);
+      return res.redirect(`/residences/${residences_id}?error=No posee créditos suficientes`);
     }
 
     try {

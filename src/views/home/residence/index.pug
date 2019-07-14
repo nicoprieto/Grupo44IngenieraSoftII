@@ -53,12 +53,13 @@ block container
     if(residence.weeks.length === 0)
       div.alert.alert-info No hay semanas para reservar
     else
+
+      if client.creditPoints === 0
+        div.alert.alert-warning No tiene creditos disponibles para poder reservar
+
       for week in residence.weeks
-        form(
-          method="POST"
-          action=`/clients/${client.id}/residences/${residence.id}`
-          class="form-inline"
-        )
+
+        div.form-inline
           label(class="my-1 mr-2") Semana numero &nbsp;
             strong= `${week.number}/${week.year}`
             span &nbsp;, que va desde &nbsp;
@@ -66,15 +67,57 @@ block container
             span &nbsp; hasta &nbsp;
             strong= `${week.getWeekEndDate()}`
 
-          input(
-            type="hidden"
-            name="weeks_id"
-            value=week.id
-          )
+            if(client.type === 'premium' && client.creditPoints !== 0)
+              button(
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target=`#modal-${week.id}`
+              ) Reservar
 
-          button(
-            type="submit"
-            class="btn btn-primary"
-          ) Reservar
+        form(
+          id=`modal-${week.id}`
+          method="POST"
+          action=`/clients/${client.id}/residences/${residence.id}`
+          class="modal fade"
+        )
+          div.modal-dialog
+            div.modal-content
+              div.modal-header
+                h6.modal-title Confirmar reserva
 
-        br
+                button(
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                )
+                  span &times;
+
+              div.modal-body
+
+                p Usted esta a punto a de reservar la residencia 
+                  strong= residence.title
+                  span  para la semana 
+                  strong= `${week.getWeekStartDate()}-${week.getWeekEndDate()}`
+
+                p Se le descontara un credito de sus 
+                  strong= client.creditPoints
+                  span  disponibles
+
+                input(
+                  type="hidden"
+                  name="weeks_id"
+                  value=week.id
+                )
+
+              div.modal-footer
+                button(
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                ) Cerrar
+
+                button(
+                  type="submit"
+                  class="btn btn-primary"
+                ) Confirmar

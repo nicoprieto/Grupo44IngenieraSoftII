@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='/css/styles.css')
     block stylesheets
     script(src='/js/jquery-3.4.1.min.js')
+    script(src='/js/bootstrap.min.js')
     block scripts
   body
 
@@ -46,7 +47,18 @@ html
         div
           label.label= `${client.email}`
 
-        div.alert.alert-warning= `Usted tiene ${client.creditPoints} credito(s)`
+        if client.type === 'normal'
+          div.alert.alert-warning Usted no es usuario premium, siendo usuario premium, usted proba reservar residencias durante el periodo premium
+            a(
+              href=`/clients/${client.id}/premium-upgrade`
+              class="btn btn-warning"
+            )
+              strong Quiero ser premium
+
+        else if client.type === 'premium'
+          span.badge.badge-success Premium
+
+        span.badge.badge-warning= `Usted tiene ${client.creditPoints} credito(s)`
 
         div
           label

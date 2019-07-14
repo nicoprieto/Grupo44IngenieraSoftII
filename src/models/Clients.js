@@ -125,4 +125,17 @@ export default class Clients extends objection.Model {
     this.updated_at = Clients.helpers.now();
   }
 
+  static get relationMappings () {
+    return {
+      weeks: {
+        relation: objection.Model.HasManyRelation,
+        modelClass: __dirname + '/Weeks',
+        join: {
+          from: 'clients.id',
+          to: 'weeks.clients_id'
+        }
+      },
+    }
+  }
+
 };
