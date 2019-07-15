@@ -30,7 +30,7 @@ export default async (
       ;
       // cannot remove a residence with weeks (reservations)
       if(weeks.length !== 0) {
-        res.redirect('/admin/residences?error=La residencia posee reservas vigentes');
+        res.redirect('/admin/residences?error=La residencia tiene reservas hechas o actualmente esta disponible para ser reservada');
       } else {
         await residence
           .$query()

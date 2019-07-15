@@ -102,7 +102,7 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
   );
 
   router.get(
-    '/:id',
+    '/:id(\\d+)',
     helpers.guard.requireAny('admin/*'),
     (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
       // redirect to login is user doest have admin/* permission
@@ -114,7 +114,7 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
   );
 
   router.get(
-    '/:id/remove',
+    '/:id(\\d+)/remove',
     helpers.guard.requireAny('admin/*'),
     (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
       // redirect to login is user doest have admin/* permission
@@ -126,7 +126,7 @@ export default (helpers: THelpers, models: TModelsWithHelpers) => {
   );
 
   router.post(
-    '/:id/remove',
+    '/:id(\\d+)/remove',
     helpers.guard.requireAny('admin/*'),
     (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
       // redirect to login is user doest have admin/* permission

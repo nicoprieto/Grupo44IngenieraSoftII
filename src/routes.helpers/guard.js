@@ -15,6 +15,7 @@ export default () => {
   const admin = new Guard.Role('admin', {
     can: ['admin/*'],
     func: async (req) => {
+      console.log('admin/*');
       return req.session.isAdmin === true;
     },
   });
@@ -22,6 +23,7 @@ export default () => {
   const client = new Guard.Role('client', {
     can: ['client/*'],
     func: async (req) => {
+      console.log('client/*');
       return req.session.isClient === true;
     },
   });
@@ -29,6 +31,7 @@ export default () => {
   const guest = new Guard.Role('guest', {
     can: ['guest/*'],
     func: async (req) => {
+      console.log('guest/*');
       return !req.session.isClient && !req.session.isAdmin;
     },
   });

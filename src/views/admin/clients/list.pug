@@ -1,0 +1,102 @@
+extends ../_layout.pug
+
+block stylesheets
+  link(rel='stylesheet', href='/css/jquery-ui.min.css')
+
+block scripts
+  script(src='/js/jquery-ui.min.js')
+  script(src='/js/datepicker-es.js')
+  script(src='/js/init.datepicker.js')
+
+block container
+  if data.length === 0 && !didSearch
+    div.alert.alert-info No existen clientes registrados.
+
+  else if data.length === 0 && didSearch
+    div.alert.alert-info Ningún cliente coincide con la búsqueda
+
+  else 
+
+    if error !== ''
+      div.alert.alert-danger= error
+
+    if message !== ''
+      div.alert.alert-success= message
+
+    div.alert.alert-info
+      h6 Filtrar clientes
+      form#searchForm(
+        method="GET"
+        action="/admin/clients/search"
+        class="form-inline"
+      )
+        select#city.form-control.my-1.mr-sm-2(name="type")
+          option(
+            value=""
+          ) Seleccione una tipo de usuario...
+          option(
+            value="Todos"
+            selected=(searchParams.type === "Todos")
+          ) Todos
+          for userType in types
+            option(
+              value=userType
+              selected=(searchParams.type === userType)
+            )= userType
+
+        div.form-group.my-1.mr-sm-2
+          input(
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            placeholder="Nombre"
+            value=searchParams.name
+          )
+
+        div.form-group.my-1.mr-sm-2
+          input(
+            type="text"
+            id="created_at"
+            name="created_at"
+            class="form-control i-am-a-datepicker"
+            placeholder="Fecha de registro"
+            autoComplete="off"
+            value=searchParams.created_at
+          )
+
+        button(
+          type="submit"
+          class="btn btn-primary mb-2"
+        ) Filtrar
+
+    table.table.table-striped
+      thead.thead-dark
+        tr
+          th Id
+          th Nombre
+          th Apellido
+          th Email
+          th Tipo de usuario
+          th Fecha de registro
+          th Acciones
+
+      tbody
+        for item in data
+          tr
+            td= item.id
+            td= item.name
+            td= item.surname
+            td= item.email
+            td= item.type
+            td= item.created_at
+            td
+              a(
+                href=`/admin/clients/${item.id}`
+                class="btn btn-link"
+              ) Ver detalle
+              a(
+                href=`/admin/clients/${item.id}/remove`
+                class="btn btn-link"
+              ) Eliminar
+              

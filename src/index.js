@@ -105,6 +105,13 @@ app.use(
   adminWeeks(routesHelpers, models)
 );
 
+import adminClients from './routes/admin.clients';
+app.use(
+  '/admin/clients',
+  // $FlowFixMe
+  adminClients(routesHelpers, models)
+);
+
 import clientsProfile from './routes/clients/profile';
 app.use(
   '/clients',

@@ -22,7 +22,7 @@ import {
 // ----------------------
 
 export default (helpers: THelpers, models: TModelsWithHelpers) => {
-  const router = express.Router();
+  const router = express.Router({ mergeParams: true });
 
   // BUG I dont know how to use cookie sessions
   const onGuardErrorFunction = (err: TGuardError, req: $Request, res: $Response, next: NextFunction) => {
