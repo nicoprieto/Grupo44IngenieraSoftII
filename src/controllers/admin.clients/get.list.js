@@ -88,7 +88,7 @@ export default async (
       }
     );
   } catch(e) {
-    console.error('fail Residences.get.list', e);
-    res.render(listViewFile, listViewProps);
+    console.error('fail database get.list', e);
+    res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
   }
 };

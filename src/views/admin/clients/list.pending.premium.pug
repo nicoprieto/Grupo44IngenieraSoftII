@@ -1,0 +1,36 @@
+extends ../_layout.pug
+
+block container
+  if data.length === 0 
+    div.alert.alert-info No hay solicitudes de altas/bajas premium por el momento.
+
+  else 
+
+    if error !== ''
+      div.alert.alert-danger= error
+
+    if message !== ''
+      div.alert.alert-success= message
+
+    table.table.table-striped
+      thead.thead-dark
+        tr
+          th Usuario
+          th Quiere pasarse a
+          th Acciones
+
+      tbody
+        for item in data
+          tr
+            td
+              a(
+                href=`/admin/clients/${item.client.id}`
+                class="btn btn-link"
+                title="Ver detalle cliente"
+              )= `${item.client.name} ${item.client.surname} ${item.client.email}`
+            td= item.type === 'downgrade' ? 'Normal' : 'Premium'
+            td
+              a(
+                href=`/admin/clients/${item.client.id}/set-type/${item.type}`
+                class="btn btn-link"
+              ) Confirmar

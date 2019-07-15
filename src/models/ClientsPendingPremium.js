@@ -41,4 +41,17 @@ export default class ClientsPendingPremium extends objection.Model {
     return 'clients_pending_premium';
   }
 
+  static get relationMappings () {
+    return {
+      client: {
+        relation: objection.Model.HasOneRelation,
+        modelClass: __dirname + '/Clients',
+        join: {
+          from: 'clients_pending_premium.clients_id',
+          to: 'clients.id',
+        }
+      },
+    }
+  }
+
 };

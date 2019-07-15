@@ -135,6 +135,14 @@ export default class Clients extends objection.Model {
           to: 'weeks.clients_id'
         }
       },
+      pendingPremium: {
+        relation: objection.Model.HasManyRelation,
+        modelClass: __dirname + '/ClientsPendingPremium',
+        join: {
+          from: 'clients.id',
+          to: 'clients_pending_premium.clients_id'
+        }
+      },
     }
   }
 

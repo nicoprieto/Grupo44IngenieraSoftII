@@ -34,3 +34,23 @@ export const listViewProps: TListViewProps = {
   types: [ 'premium', 'normal' ],
   didSearch: false,
 };
+
+// ********************
+//
+// ********************
+
+type TListPendingPremiumViewProps = {
+  title: string,
+  data: TClients,
+  error: string,
+  message: string,
+};
+
+// WARNING a pug cannot contains dots in the filename? why?
+export const listPendingPremiumViewFile = 'admin/clients/list.pending.premium.pug';
+export const listPendingPremiumViewProps: TListPendingPremiumViewProps = {
+  title: 'Listado de solicitudes alta/baja premium',
+  data: [],
+  error: '',
+  message: '',
+};
