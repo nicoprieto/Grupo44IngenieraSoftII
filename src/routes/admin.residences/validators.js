@@ -18,16 +18,32 @@ export default (
     .validator
       .check('title')
       .custom(async (title, { req }: { req: $Request }) => {
+        const { id } = req.params;
         try {
-          return (await models
-            .Residences
-            .query()
-            .where({
-              title,
-              address_city: req.body.address_city,
-              isRemoved: false,
-            })
-          ).length === 0;
+          let residences = [];
+          if(typeof id !== 'undefined') {
+            residences = await models
+              .Residences
+              .query()
+              .where({
+                title,
+                address_city: req.body.address_city,
+                isRemoved: false,
+              })
+              // ignore if i am updaing same field
+              .whereNot('id', id)
+            ;
+          } else {
+            residences = await models
+              .Residences
+              .query()
+              .where({
+                title,
+                address_city: req.body.address_city,
+                isRemoved: false,
+              });
+          }
+          return residences.length === 0;
         } catch(e) {
           console.log(e);
           return false;
