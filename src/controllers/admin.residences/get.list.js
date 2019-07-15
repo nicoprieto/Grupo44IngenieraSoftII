@@ -19,12 +19,19 @@ export default async (
   helpers: THelpers,
   { Residences }: TModels
 ) => {
+  const error = req.query.error || '';
+  const message = req.query.message || '';
   try {
     res.render(
       listViewFile,
       {
         ...listViewProps,
-        data: await Residences.query().where({ isRemoved: false }).orderBy('id', 'DESC'),
+        data: await Residences
+          .query()
+          .where({ isRemoved: false })
+          .orderBy('id', 'DESC'),
+        error,
+        message,
       }
     );
   } catch(e) {

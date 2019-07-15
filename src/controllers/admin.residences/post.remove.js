@@ -12,24 +12,39 @@ export default async (
   req: $Request,
   res: $Response,
   helpers: THelpers,
-  { Residences }: TModels
+  {
+    Residences,
+    Weeks,
+  }: TModels
 ) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const residence = await Residences.query().findById(id);
   if(residence instanceof Residences) {
     try {
-      /*
-      const r1 = await residence.$relatedQuery('photos').delete();
-      const r2 = await Residences.query().findById(id).delete();
-      */
-      await Residences.query().findById(id).patch({ isRemoved: true });
-      res.redirect('/admin/residences');
+      const weeks = await Weeks
+        .query()
+        .where({
+          residences_id: id,
+          isRemoved: false,
+        })
+      ;
+      // cannot remove a residence with weeks (reservations)
+      if(weeks.length !== 0) {
+        res.redirect('/admin/residences?error=La residencia posee reservas vigentes');
+      } else {
+        await residence
+          .$query()
+          .patch({ isRemoved: true })
+        ;
+        res.redirect('/admin/residences?message=Residencia borrada correctamente');
+      }
     } catch(e) {
       // fail database
-      console.error(e);
-      res.redirect('/admin/residences');
+      console.error('fail post.remove', e);
+      res.status(helpers.HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
     }
   } else {
-    res.redirect('/admin/residences');
+    console.error('fail post.remove', id);
+    res.status(helpers.HttpStatusCodes.BAD_REQUEST).send();
   } 
 };

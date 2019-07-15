@@ -8,13 +8,17 @@ import {
 
 type TListViewProps = {
   title: string,
-  data: TResidences
+  data: TResidences,
+  error: string,
+  message: string,
 }; 
 
 export const listViewFile = 'admin/residences/list';
 export const listViewProps: TListViewProps = {
   title: 'Residencia - Listado',
   data: [],
+  error: '',
+  message: '',
 };
 
 // *********************

@@ -4,6 +4,13 @@ block container
   if data.length === 0
     div.alert.alert-info No existen residencias cargadas en el sistema.
   else 
+
+    if error !== ''
+      div.alert.alert-danger= error
+
+    if message !== ''
+      div.alert.alert-success= message
+
     table.table.table-striped
       thead.thead-dark
         tr
