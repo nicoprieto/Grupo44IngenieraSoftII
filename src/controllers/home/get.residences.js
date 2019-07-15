@@ -49,9 +49,7 @@ export default async (
       cities = await Residences
         .query()
         .select('address_city')
-        .where({
-          isRemoved: false,
-        })
+        .where('residences.isRemoved', false)
         .map(({ address_city }) => address_city)
       ;
 
@@ -76,6 +74,8 @@ export default async (
             })
             .whereIn('number', weeksRange)
             .whereIn('year', yearsRange)
+            .where('residences.isRemoved', false)
+            .groupBy('residences.id')
           ;
         } else {
           residences = await Residences
@@ -84,6 +84,8 @@ export default async (
             .joinRelation('weeks')
             .whereIn('number', weeksRange)
             .whereIn('year', yearsRange)
+            .where('residences.isRemoved', false)
+            .groupBy('residences.id')
           ;
         }
 
@@ -95,6 +97,8 @@ export default async (
           .query()
           .eager('photos')
           .joinRelation('weeks')
+          .where('residences.isRemoved', false)
+          .groupBy('residences.id')
         ;
         errors = validationResult.array();
 
@@ -104,6 +108,8 @@ export default async (
           .query()
           .eager('photos')
           .joinRelation('weeks')
+          .where('residences.isRemoved', false)
+          .groupBy('residences.id')
         ;
       }
     // show five residences
@@ -112,7 +118,7 @@ export default async (
         .query()
         .eager('photos')
         .limit(5)
-        // dont care if they are enabled or removed
+        .where('residences.isRemoved', false)
     }
     res.render(
       residencesViewFile,

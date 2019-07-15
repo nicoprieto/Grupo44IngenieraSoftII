@@ -23,18 +23,27 @@ export default async (
     try {
       const weeks = await Weeks
         .query()
-        .where({
+        .whereNotNull('clients_id')
+        .andWhere({
           residences_id: id,
           isRemoved: false,
         })
       ;
-      // cannot remove a residence with weeks (reservations)
+      // cannot remove a residence with weeks (reservated)
       if(weeks.length !== 0) {
         res.redirect('/admin/residences?error=La residencia tiene reservas hechas o actualmente esta disponible para ser reservada');
       } else {
         await residence
           .$query()
           .patch({ isRemoved: true })
+        ;
+        await Weeks
+          .query()
+          .whereNull('clients_id')
+          .andWhere({
+            residences_id: id,
+          })
+          .delete()
         ;
         res.redirect('/admin/residences?message=Residencia borrada correctamente');
       }
