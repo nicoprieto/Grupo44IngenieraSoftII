@@ -5,6 +5,9 @@ exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('clients').del()
     .then(function() {
+      return knex('clients_pending_premium').del();
+    })
+    .then(function() {
       return Scrypt.kdf('123456', { logN: 15 });
     })
     .then(function(pass) {
