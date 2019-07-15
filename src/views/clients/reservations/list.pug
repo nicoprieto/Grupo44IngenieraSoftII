@@ -1,0 +1,26 @@
+extends ../_layout.pug
+
+block container
+
+  h3= title
+
+  if client.weeks.length === 0
+    alert.alert-info Usted no cuenta con reservas por el momento
+
+  else
+    for week in client.weeks
+      div.form-inline
+        label(class="my-1 mr-2") Residencia 
+          span &nbsp;
+          strong= `${week.residence.title}`
+
+      div.form-inline
+        label(class="my-1 mr-2") Semana numero &nbsp;
+          strong= `${week.number}/${week.year}`
+          span &nbsp;, que va desde &nbsp;
+          strong= `${week.getWeekStartDate()}`
+          span &nbsp; hasta &nbsp;
+          strong= `${week.getWeekEndDate()}`
+
+      hr
+

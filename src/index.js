@@ -135,9 +135,16 @@ app.use(
 
 import clientsResidences from './routes/clients/residences';
 app.use(
-  '/clients/:id/residences',
+  '/clients/:id(\\d+)/residences',
   // $FlowFixMe
   clientsResidences(routesHelpers, models)
+);
+
+import clientsReservations from './routes/clients/reservations';
+app.use(
+  '/clients/:id(\\d+)/reservations',
+  // $FlowFixMe
+  clientsReservations(routesHelpers, models)
 );
 
 import home from './routes/home';

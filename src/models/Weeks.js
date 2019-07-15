@@ -118,7 +118,15 @@ export default class Weeks extends objection.Model {
           from: 'weeks.residences_id',
           to: 'residences.id'
         }
-      }
+      },
+      client: {
+        relation: objection.Model.HasOneRelation,
+        modelClass: __dirname + '/Clients',
+        join: {
+          from: 'weeks.clients_id',
+          to: 'clients.id'
+        }
+      },
     }
   }
 

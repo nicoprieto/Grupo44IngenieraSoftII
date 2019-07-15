@@ -21,20 +21,28 @@ export default async (
 ) => {
   const isDebugMode = typeof req.query.debug !== 'undefined';
   try {
+    const data = await Weeks
+      .query()
+      .eager('[residence, client]')
+      .modifyEager(
+        'residence',
+        (builder) => builder.select('id', 'title')
+      )
+      .modifyEager(
+        'client',
+        (builder) => builder.select('id', 'name', 'surname', 'email')
+      )
+      .where('weeks.isRemoved', false)
+      .orderBy('weeks.id', 'DESC')
+    ;
+    console.log('-------------');
+    console.log(data);
     res.render(
       listViewFile,
       {
         ...listViewProps,
-        data: await Weeks
-          .query()
-          .eager('residence')
-          .modifyEager(
-            'residence',
-            (builder) => builder.select('id', 'title')
-          )
-          .where('weeks.isRemoved', false)
-          .orderBy('weeks.id', 'DESC'),
-          isDebugMode,
+        data,
+        isDebugMode,
       }
     );
   } catch(e) {

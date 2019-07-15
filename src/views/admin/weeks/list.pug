@@ -12,6 +12,7 @@ block container
           th Semana
           th Anio
           th Rango
+          th Reservada por
           th Acciones
 
       tbody
@@ -26,6 +27,15 @@ block container
             td= item.number
             td= item.year
             td= `de ${item.getWeekStartDate()} hasta ${item.getWeekEndDate()}`
+            if item.client !== null
+              td
+                a(
+                  href=`/admin/client/${item.client.id}/reservations`
+                  title="Ver reservas cliente"
+                  class="btn btn-link"
+                )= `${item.client.name} ${item.client.surname} ${item.client.email}`
+            else
+              td Aun sin reservar
             td
               a(
                 href=`/admin/weeks/${item.id}`
